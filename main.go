@@ -8,11 +8,14 @@ import (
 )
 
 func main() {
+	//err := services.SendSMS()
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
 	db.InitDB()
+	//db.ReadFile()
 	app.Run(":8080")
 }
-
-
 
 func currPath() string {
 	exec, err := os.Executable()

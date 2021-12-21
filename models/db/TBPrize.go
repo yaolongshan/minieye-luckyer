@@ -2,6 +2,7 @@ package db
 
 import "github.com/jinzhu/gorm"
 
+// TBPrize 奖项表
 type TBPrize struct {
 	gorm.Model
 }
