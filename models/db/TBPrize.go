@@ -1,0 +1,11 @@
+package db
+
+import "github.com/jinzhu/gorm"
+
+type TBPrize struct {
+	gorm.Model
+}
+
+func (TBPrize) TableName() string {
+	return "tb_prize"
+}
