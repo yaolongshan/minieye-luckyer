@@ -1,9 +1,9 @@
 package main
 
 import (
+	api "code/minieye-luckyer/controllers"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"time"
 )
 
@@ -15,16 +15,18 @@ func init() {
 	//前台接口
 	web := app.Group("/api/web")
 	{
-		web.GET("/add", func(c *gin.Context) {
-			c.String(http.StatusOK, "hhh")
+		web.GET("/test", func(c *gin.Context) {
+
 		})
 	}
 	//后台接口
 	admin := app.Group("/api/admin")
 	{
-		admin.GET("/add", func(c *gin.Context) {
-			c.String(http.StatusOK, "www")
-		})
+		admin.GET("/user/list", api.ApiGetAllUser)
+		admin.POST("/user/add", api.ApiAddUser)
+		admin.POST("/prize/add", api.ApiAddPrize)
+		admin.GET("/prize/list", api.ApiGetAllPrize)
+		admin.POST("/prize/update", api.ApiUpdatePrize)
 	}
 }
 

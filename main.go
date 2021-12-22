@@ -14,7 +14,7 @@ func main() {
 	//}
 	db.InitDB()
 	//db.ReadFile()
-	app.Run(":8080")
+	app.Run()
 }
 
 func currPath() string {
