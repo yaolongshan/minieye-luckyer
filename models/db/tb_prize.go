@@ -25,12 +25,24 @@ func UpdatePrize(Name string, Sum int) error {
 
 // AddPrize 添加一个奖项
 func AddPrize(Name string, Sum int) error {
-	p := TBPrize{
+	p := &TBPrize{
 		Name: Name,
 		Sum:  Sum,
 	}
 	err := db.Create(&p).Error
 	return err
+}
+
+// GetPrizeByID 获取一个奖项的信息
+func GetPrizeByID(ID int) (p TBPrize) {
+	db.Where("id = ?", ID).Find(&p)
+	return p
+}
+
+// PrizeDegressive 让这个奖项的数量递减
+func PrizeDegressive(ID int) {
+	prize := GetPrizeByID(ID)
+	db.Model(&TBPrize{}).Where("id = ?", ID).Update("sum", prize.Sum-1)
 }
 
 func (TBPrize) TableName() string {

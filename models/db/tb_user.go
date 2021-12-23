@@ -12,6 +12,7 @@ type TBUser struct {
 	Number   string // 工号
 	Contract string // 合同公司
 	Mail     string // 邮箱
+	IsLucky  bool   // 是否中过奖
 }
 
 // UserCount 员工数量

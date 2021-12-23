@@ -12,21 +12,24 @@ var app *gin.Engine
 func init() {
 	app = gin.Default()
 	//app.Use(MiddleWare())
-	//前台接口
-	web := app.Group("/api/web")
+	v1 := app.Group("/api")
 	{
-		web.GET("/test", func(c *gin.Context) {
-
-		})
-	}
-	//后台接口
-	admin := app.Group("/api/admin")
-	{
-		admin.GET("/user/list", api.ApiGetAllUser)
-		admin.POST("/user/add", api.ApiAddUser)
-		admin.POST("/prize/add", api.ApiAddPrize)
-		admin.GET("/prize/list", api.ApiGetAllPrize)
-		admin.POST("/prize/update", api.ApiUpdatePrize)
+		//员工列表
+		v1.GET("/user/list", api.ApiGetAllUser)
+		//添加员工
+		v1.POST("/user/add", api.ApiAddUser)
+		//添加奖项
+		v1.POST("/prize/add", api.ApiAddPrize)
+		//奖项列表
+		v1.GET("/prize/list", api.ApiGetAllPrize)
+		//设置奖项数量
+		v1.POST("/prize/update", api.ApiUpdatePrize)
+		//中奖名单列表
+		v1.GET("/lucky/list", api.ApiGetAllLucky)
+		//下载中奖名单表格文件
+		v1.GET("/lucky/file", api.ApiGetLuckyFile)
+		//抽奖接口
+		v1.GET("/random", api.ApiGetRandom)
 	}
 }
 

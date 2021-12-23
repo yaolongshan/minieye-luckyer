@@ -17,6 +17,7 @@ func InitDB() {
 	}
 	db.AutoMigrate(&TBUser{})
 	db.AutoMigrate(&TBPrize{})
+	db.AutoMigrate(&TBLucky{})
 }
 
 func ReadFile() {
@@ -52,8 +53,10 @@ func ReadFile() {
 				//fmt.Print("邮箱：", text," ")
 				user.Mail = text
 			}
+			user.IsLucky = false
 		}
-		//db.Create(&user)
+
+		db.Create(&user)
 		fmt.Println(user)
 	}
 
