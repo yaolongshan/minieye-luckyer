@@ -7,7 +7,8 @@ import (
 )
 
 type config struct {
-	RootPath string `json:"RootPath"`
+	RootPath   string `json:"RootPath"`
+	AccessPath string `json:"AccessPath"`
 }
 
 var Conf config

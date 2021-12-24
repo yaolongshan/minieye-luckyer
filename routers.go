@@ -29,9 +29,10 @@ func init() {
 		//下载中奖名单表格文件
 		v1.GET("/lucky/file", api.ApiGetLuckyFile)
 		//抽奖接口
-		v1.GET("/random", api.ApiGetRandom)
+		v1.GET("/lucky/random", api.ApiGetRandom)
 		//图片预览
-		v1.GET("/images/:name", api.ApiImages)
+		v1.GET("/images/:name", api.ApiImagesPreview)
+
 	}
 }
 

@@ -7,17 +7,17 @@ import (
 // TBLucky 中奖名单
 type TBLucky struct {
 	gorm.Model
-	UserID    int
-	Name      string // 员工姓名
-	PrizeName string // 中奖的奖项名称
+	UserID     int
+	Name       string // 员工姓名
+	PrizeLevel string // 中奖的奖项级别
 }
 
 // AddLucky 新加一个中奖名单
-func AddLucky(userID int, name, prizeName string) {
+func AddLucky(userID int, name, prizeLevel string) {
 	l := &TBLucky{
-		UserID:    userID,
-		Name:      name,
-		PrizeName: prizeName,
+		UserID:     userID,
+		Name:       name,
+		PrizeLevel: prizeLevel,
 	}
 	db.Create(&l)
 }
