@@ -59,5 +59,8 @@ func ApiGetRandom(c *gin.Context) {
 		//标记一下用户表中的已中奖字段
 		db.UserHasLucky(int(user.ID), true)
 	}
-	c.JSON(http.StatusOK, results)
+	c.JSON(http.StatusOK, gin.H{
+		"Results":  results,
+		"PrizeSum": prize.Sum,
+	})
 }

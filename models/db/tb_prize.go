@@ -7,8 +7,10 @@ import (
 // TBPrize 奖项设置表
 type TBPrize struct {
 	gorm.Model
-	Name string `gorm:"unique;not null"` // 奖项名称 特等奖、一等奖
-	Sum  int    // 奖项数量
+	Level string `gorm:"unique;not null"` // 奖项级别
+	Name  string // 奖品名称
+	Sum   int    // 奖项数量
+	Image string
 }
 
 // GetPrizeList 奖项列表

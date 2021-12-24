@@ -30,6 +30,8 @@ func init() {
 		v1.GET("/lucky/file", api.ApiGetLuckyFile)
 		//抽奖接口
 		v1.GET("/random", api.ApiGetRandom)
+		//图片预览
+		v1.GET("/images/:name", api.ApiImages)
 	}
 }
 
