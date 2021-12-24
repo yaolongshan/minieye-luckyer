@@ -37,7 +37,7 @@
               "Contract": "深圳佑驾创新科技有限公司",
               "Mail": "xxxxxxx@minieye.cc",
             "IsLucky": false //是否中奖过
-          },
+          }
       ]
   }
   ```
@@ -102,10 +102,10 @@ HTTP: `POST`
         "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
         "UpdatedAt": "2021-12-21T17:22:27.732045+08:00",
         "DeletedAt": null,
-        "Level": "一等奖" // 奖项级别
-				"Name": "神秘大礼包" // 奖品名称
-				"Sum": 10    // 奖项数量
-				"ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
+        "Level": "一等奖", // 奖项级别
+        "Name": "神秘大礼包", // 奖品名称
+        "Sum": 10,    // 奖项数量
+        "ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
     }
 }
 ```
@@ -122,15 +122,15 @@ HTTP: `GET`
 {
   	"Priezs":[
       	{
-      	"ID": 1,
-        "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
-        "UpdatedAt": "2021-12-21T17:22:27.732045+08:00",
-        "DeletedAt": null,
-        "Level": "一等奖" // 奖项级别
-				"Name": "神秘大礼包" // 奖品名称
-				"Sum": 10    // 奖项数量
-				"ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
-    		}
+      	  "ID": 1,
+          "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
+          "UpdatedAt": "2021-12-21T17:22:27.732045+08:00",
+          "DeletedAt": null,
+          "Level": "一等奖", // 奖项级别
+          "Name": "神秘大礼包", // 奖品名称
+          "Sum": 10,   // 奖项数量
+          "ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
+        },
       	.....
     ]
 }
@@ -169,10 +169,10 @@ HTTP: `GET`
         "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
         "UpdatedAt": "2021-12-21T17:22:27.732045+08:00",
         "DeletedAt": null,
-  			"UserID": 225,
-  			"Name": "张三",
- 				"PrizeLevel": "一等奖"
-			}
+        "UserID": 225,
+        "Name": "张三",
+        "PrizeLevel": "一等奖"
+      }
     ]
 }
 ```
