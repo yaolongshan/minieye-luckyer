@@ -18,31 +18,31 @@ func GetPrizeList() (prizes []TBPrize) {
 }
 
 // UpdatePrize 修改奖项的数量
-func UpdatePrize(Name string, Sum int) error {
-	err := db.Model(&TBPrize{}).Where("name = ?", Name).Update("sum", Sum).Error
+func UpdatePrize(name string, sum int) error {
+	err := db.Model(&TBPrize{}).Where("name = ?", name).Update("sum", sum).Error
 	return err
 }
 
 // AddPrize 添加一个奖项
-func AddPrize(Name string, Sum int) error {
+func AddPrize(name string, sum int) error {
 	p := &TBPrize{
-		Name: Name,
-		Sum:  Sum,
+		Name: name,
+		Sum:  sum,
 	}
 	err := db.Create(&p).Error
 	return err
 }
 
 // GetPrizeByID 获取一个奖项的信息
-func GetPrizeByID(ID int) (p TBPrize) {
-	db.Where("id = ?", ID).Find(&p)
+func GetPrizeByID(id int) (p TBPrize) {
+	db.Where("id = ?", id).Find(&p)
 	return p
 }
 
 // PrizeDegressive 让这个奖项的数量递减
-func PrizeDegressive(ID int) {
-	prize := GetPrizeByID(ID)
-	db.Model(&TBPrize{}).Where("id = ?", ID).Update("sum", prize.Sum-1)
+func PrizeDegressive(id int) {
+	prize := GetPrizeByID(id)
+	db.Model(&TBPrize{}).Where("id = ?", id).Update("sum", prize.Sum-1)
 }
 
 func (TBPrize) TableName() string {

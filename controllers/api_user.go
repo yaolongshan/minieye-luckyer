@@ -28,12 +28,12 @@ func ApiAddUser(c *gin.Context) {
 	if err := c.ShouldBindJSON(&user); err != nil {
 		// 返回错误信息
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": false,
-			"msg":    err.Error()})
+			"Status": false,
+			"Msg":    err.Error()})
 		return
 	}
 	db.AddUser(user.Name, user.Phone, user.Type, user.Number, user.Contract, user.Mail)
 	c.JSON(http.StatusOK, gin.H{
-		"status": true,
-		"msg":    "ok"})
+		"Status": true,
+		"Msg":    "ok"})
 }

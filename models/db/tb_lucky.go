@@ -13,19 +13,19 @@ type TBLucky struct {
 }
 
 // AddLucky 新加一个中奖名单
-func AddLucky(UserID int, Name, PrizeName string) {
+func AddLucky(userID int, name, prizeName string) {
 	l := &TBLucky{
-		UserID:    UserID,
-		Name:      Name,
-		PrizeName: PrizeName,
+		UserID:    userID,
+		Name:      name,
+		PrizeName: prizeName,
 	}
 	db.Create(&l)
 }
 
 // QueryLucky 查询某人是否中奖
-func QueryLucky(UserID int) bool {
+func QueryLucky(userID int) bool {
 	var l TBLucky
-	db.Where(&TBLucky{UserID: UserID}).Find(&l)
+	db.Where(&TBLucky{UserID: userID}).Find(&l)
 	return l.Name != ""
 }
 
