@@ -55,6 +55,11 @@ func PrizeDegressive(id int) {
 	db.Model(&TBPrize{}).Where("id = ?", id).Update("sum", prize.Sum-1)
 }
 
+func PrizeDeleteByID(id int) error {
+	err := db.Unscoped().Where("id = ?", id).Delete(&TBPrize{}).Error
+	return err
+}
+
 func (TBPrize) TableName() string {
 	return "tb_prize"
 }
