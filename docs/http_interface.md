@@ -219,7 +219,7 @@ http://localhost:8080/api/lucky/random?id=1&count=10
 
 路径: `/api/sms/send`
 
-HTTP: `GET`
+HTTP: `POST`
 
 参数类型: `json` 
 
