@@ -21,7 +21,7 @@ func ApiGetAllLucky(c *gin.Context) {
 
 // ApiGetLuckyFile 下载中奖名单表格文件
 func ApiGetLuckyFile(c *gin.Context) {
-	filePath := conf.Conf.RootPath + "/user.xlsx"
+	filePath := conf.Conf.RootPath + "/files/中奖名单.xlsx"
 	fileTmp, _ := os.Open(filePath)
 	defer fileTmp.Close()
 	fileName := path.Base(filePath)

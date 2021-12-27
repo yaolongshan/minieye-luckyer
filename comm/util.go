@@ -2,8 +2,10 @@ package comm
 
 import (
 	"code/minieye-luckyer/conf"
+	"code/minieye-luckyer/models/db"
 	"encoding/base64"
 	"fmt"
+	"github.com/tealeg/xlsx"
 	"io/ioutil"
 	"math/rand"
 	"os"
@@ -21,6 +23,43 @@ func RandName() string {
 	}
 	s := string(result)
 	return s
+}
+
+func CreateXLSXFile() {
+	list := db.GetLuckyList()
+	savePath := fmt.Sprintf("%v/files/中奖名单.xlsx", conf.Conf.RootPath)
+	file := xlsx.NewFile()
+	sheet, _ := file.AddSheet("Sheet1")
+	{
+		row := sheet.AddRow()
+		row.SetHeightCM(1) //设置每行的高度
+		cell := row.AddCell()
+		cell.Value = "姓名"
+		cell = row.AddCell()
+		cell.Value = "工号"
+		cell = row.AddCell()
+		cell.Value = "手机号"
+		cell = row.AddCell()
+		cell.Value = "邮箱"
+		cell = row.AddCell()
+		cell.Value = "奖项等级"
+		cell = row.AddCell()
+		cell.Value = "奖品内容"
+	}
+
+	for _, l := range list {
+		row := sheet.AddRow()
+		row.SetHeightCM(1)
+		cell := row.AddCell()
+		cell.Value = l.Name
+		cell = row.AddCell()
+		cell.Value = l.PrizeLevel
+	}
+
+	err := file.Save(savePath)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func Base64SaveImage(base64Content string) (bool, string) {
