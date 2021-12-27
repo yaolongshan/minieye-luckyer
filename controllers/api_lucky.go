@@ -12,7 +12,11 @@ import (
 // ApiGetAllLucky 获取中奖名单
 func ApiGetAllLucky(c *gin.Context) {
 	list := db.GetLuckyList()
-	c.JSON(http.StatusOK, gin.H{"LuckyList": list})
+	count := db.LuckyCount()
+	c.JSON(http.StatusOK, gin.H{
+		"Status":    true,
+		"Count":     count,
+		"LuckyList": list})
 }
 
 // ApiGetLuckyFile 下载中奖名单表格文件

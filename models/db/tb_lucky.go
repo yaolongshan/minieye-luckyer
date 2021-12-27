@@ -35,6 +35,12 @@ func GetLuckyList() (ls []TBLucky) {
 	return ls
 }
 
+// LuckyCount 中奖列表数量
+func LuckyCount() (count int) {
+	db.Model(&TBLucky{}).Count(&count)
+	return count
+}
+
 func (TBLucky) TableName() string {
 	return "tb_lucky"
 }
