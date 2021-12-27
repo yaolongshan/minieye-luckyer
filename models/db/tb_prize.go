@@ -26,8 +26,8 @@ func PrizeCount() (count int) {
 }
 
 // UpdatePrize 修改奖项的数量
-func UpdatePrize(level string, sum int) error {
-	err := db.Model(&TBPrize{}).Where("level = ?", level).Update("sum", sum).Error
+func UpdatePrize(id, sum int) error {
+	err := db.Model(&TBPrize{}).Where("id = ?", id).Update("sum", sum).Error
 	return err
 }
 

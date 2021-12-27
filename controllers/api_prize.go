@@ -64,8 +64,8 @@ func ApiGetAllPrize(c *gin.Context) {
 // ApiUpdatePrize 修改奖项的数量
 func ApiUpdatePrize(c *gin.Context) {
 	type req struct {
-		Level string `json:"level"`
-		Sum   int    `json:"sum"`
+		ID  int `json:"id"`
+		Sum int    `json:"sum"`
 	}
 	var r req
 	if err := c.ShouldBindJSON(&r); err != nil {
@@ -75,7 +75,7 @@ func ApiUpdatePrize(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	err := db.UpdatePrize(r.Level, r.Sum)
+	err := db.UpdatePrize(r.ID, r.Sum)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,

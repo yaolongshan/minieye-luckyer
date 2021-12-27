@@ -10,7 +10,7 @@
 
   ```json
   {
-    	"Status": true,
+      "Status": true,
       "Count": 430, //员工数量
       "Users": [
           {
@@ -68,7 +68,7 @@
 
   ```json
   {
-    	"Status": true,
+      "Status": true,
       "Msg": "ok"
   }
   ```
@@ -150,7 +150,7 @@ HTTP: `POST`
 
 ```json
 {
-  	"level":"一等奖", //要修改奖项的级别
+  	"id":1, //要修改奖项的id
   	"sum":10 //修改后的数量
 }
 ```
@@ -179,9 +179,9 @@ HTTP: `GET`
 
 ```json
 {
-  	"Status": true,
-  	"Count": 20,
-  	"LuckyList": [
+  "Status": true,
+  "Count": 20,
+  "LuckyList": [
       {
       	"ID": 1,
         "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
@@ -195,7 +195,7 @@ HTTP: `GET`
         "PrizeLevel": "特等奖",
         "Content": "美的洗衣机一台"
       }
-    ]
+  ]
 }
 ```
 
@@ -250,9 +250,9 @@ HTTP: `POST`
 
 ```json
 {
-  "name":"张三",
-  "phone":"18088888888",
-  "content":"特等奖，美的冰箱一台" //内容可以是这种格式，奖项级别+奖品内容，也可以只有奖项级别
+    "name":"张三",
+    "phone":"18088888888",
+    "content":"特等奖，美的冰箱一台" //内容可以是这种格式，奖项级别+奖品内容，也可以只有奖项级别
 }
 ```
 
