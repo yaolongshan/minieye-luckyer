@@ -13,7 +13,7 @@ import (
 // ApiGetRandom 随机抽奖，根据每个奖项的可中奖数量，返回中奖人员
 func ApiGetRandom(c *gin.Context) {
 	id, err := strconv.Atoi(c.Query("id")) // 奖项id
-	if err != nil {
+	if err != nil || id < 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "id参数错误",
@@ -21,7 +21,7 @@ func ApiGetRandom(c *gin.Context) {
 		return
 	}
 	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
-	if err != nil {
+	if err != nil || count <= 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "count参数错误",
@@ -68,6 +68,7 @@ func ApiGetRandom(c *gin.Context) {
 		//标记一下用户表中的已中奖字段
 		db.UserHasLucky(int(user.ID), true)
 	}
+	prize = db.GetPrizeByID(id)
 	c.JSON(http.StatusOK, gin.H{
 		"Status":   true,
 		"Results":  results,
