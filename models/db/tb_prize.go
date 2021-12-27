@@ -19,6 +19,12 @@ func GetPrizeList() (prizes []TBPrize) {
 	return prizes
 }
 
+// PrizeCount 数量
+func PrizeCount() (count int) {
+	db.Model(&TBPrize{}).Count(&count)
+	return count
+}
+
 // UpdatePrize 修改奖项的数量
 func UpdatePrize(level string, sum int) error {
 	err := db.Model(&TBPrize{}).Where("level = ?", level).Update("sum", sum).Error

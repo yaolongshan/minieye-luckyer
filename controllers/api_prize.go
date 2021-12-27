@@ -54,7 +54,11 @@ func ApiAddPrize(c *gin.Context) {
 // ApiGetAllPrize 奖项列表
 func ApiGetAllPrize(c *gin.Context) {
 	prizes := db.GetPrizeList()
-	c.JSON(http.StatusOK, gin.H{"Prizes": prizes})
+	count := db.PrizeCount()
+	c.JSON(http.StatusOK, gin.H{
+		"Status": true,
+		"Count":  count,
+		"Prizes": prizes})
 }
 
 // ApiUpdatePrize 修改奖项的数量
