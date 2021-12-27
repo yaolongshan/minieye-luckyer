@@ -35,7 +35,7 @@ func init() {
 		//图片预览
 		v1.GET("/images/:name", api.ApiImagesPreview)
 		//短信接口
-		v1.GET("/sms/send", api.ApiSendSMS)
+		v1.POST("/sms/send", api.ApiSendSMS)
 		//抽祝福语 greetings
 		//v1.GET("/greetings/random")
 	}
