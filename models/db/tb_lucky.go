@@ -9,15 +9,23 @@ type TBLucky struct {
 	gorm.Model
 	UserID     int
 	Name       string // 员工姓名
+	Number     string // 工号
+	Phone      string
+	Mail       string
 	PrizeLevel string // 中奖的奖项级别
+	Content    string // 奖品内容
 }
 
 // AddLucky 新加一个中奖名单
-func AddLucky(userID int, name, prizeLevel string) {
+func AddLucky(userID int, name, number, phone, mail, prizeLevel, content string) {
 	l := &TBLucky{
 		UserID:     userID,
 		Name:       name,
+		Number:     number,
+		Phone:      phone,
+		Mail:       mail,
 		PrizeLevel: prizeLevel,
+		Content:    content,
 	}
 	db.Create(&l)
 }

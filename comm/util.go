@@ -27,6 +27,7 @@ func RandName() string {
 
 func CreateXLSXFile() {
 	list := db.GetLuckyList()
+	fmt.Println(len(list))
 	savePath := fmt.Sprintf("%v/files/中奖名单.xlsx", conf.Conf.RootPath)
 	file := xlsx.NewFile()
 	sheet, _ := file.AddSheet("Sheet1")

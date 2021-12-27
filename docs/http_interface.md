@@ -189,7 +189,11 @@ HTTP: `GET`
         "DeletedAt": null,
         "UserID": 225,
         "Name": "张三",
-        "PrizeLevel": "一等奖"
+        "Number": "00001",
+        "Phone": "18088888888",
+        "Mail": "zhangsan@minieye.cc",
+        "PrizeLevel": "特等奖",
+        "Content": "美的洗衣机一台"
       }
     ]
 }

@@ -53,7 +53,7 @@ func ApiGetRandom(c *gin.Context) {
 		}
 		results = append(results, r)
 		//保存到中奖信息
-		db.AddLucky(int(user.ID), user.Name, prize.Name)
+		db.AddLucky(int(user.ID), user.Name, user.Number, user.Phone, user.Mail, prize.Level, prize.Name)
 		//奖项数量递减一下
 		db.PrizeDegressive(int(prize.ID))
 		//标记一下用户表中的已中奖字段
