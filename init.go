@@ -11,7 +11,7 @@ import (
 func Init() {
 	conf.LoadLocalConf()
 	db.InitDB()
-	// images dir
+	// dir
 	imagePath := fmt.Sprintf("%v/images", conf.Conf.RootPath)
 	if !comm.IsFileExist(imagePath) {
 		err := os.Mkdir(imagePath, os.ModePerm)
@@ -19,6 +19,11 @@ func Init() {
 			panic(err)
 		}
 	}
-
-	//db.ReadFile()
+	filesPath := fmt.Sprintf("%v/files", conf.Conf.RootPath)
+	if !comm.IsFileExist(filesPath) {
+		err := os.Mkdir(filesPath, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+	}
 }

@@ -122,7 +122,7 @@ HTTP: `GET`
 {
   	"Status": true,
   	"Count": 5,
-  	"Priezs": [
+  	"Prizes": [
       	{
       	  "ID": 1,
           "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
