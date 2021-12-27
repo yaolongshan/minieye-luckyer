@@ -14,17 +14,26 @@ import (
 func ApiGetRandom(c *gin.Context) {
 	id, err := strconv.Atoi(c.Query("id")) // 奖项id
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "id参数错误",
+			"Error":  err.Error()})
 		return
 	}
 	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "count参数错误",
+			"Error":  err.Error()})
 		return
 	}
 	prize := db.GetPrizeByID(id)
 	if prize.Sum <= 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"Msg": "该奖项已抽奖完毕"})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "该奖项已抽奖完毕",
+			"Error":  err.Error()})
 		return
 	}
 	type result struct {
@@ -60,6 +69,7 @@ func ApiGetRandom(c *gin.Context) {
 		db.UserHasLucky(int(user.ID), true)
 	}
 	c.JSON(http.StatusOK, gin.H{
+		"Status":   true,
 		"Results":  results,
 		"PrizeSum": prize.Sum,
 	})

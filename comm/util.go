@@ -27,13 +27,12 @@ func RandName() string {
 
 func CreateXLSXFile() {
 	list := db.GetLuckyList()
-	fmt.Println(len(list))
-	savePath := fmt.Sprintf("%v/files/中奖名单.xlsx", conf.Conf.RootPath)
+	savePath := fmt.Sprintf("%v/files/info.xlsx", conf.Conf.RootPath)
 	file := xlsx.NewFile()
 	sheet, _ := file.AddSheet("Sheet1")
 	{
 		row := sheet.AddRow()
-		row.SetHeightCM(1) //设置每行的高度
+		row.SetHeightCM(0.8) //设置每行的高度
 		cell := row.AddCell()
 		cell.Value = "姓名"
 		cell = row.AddCell()
@@ -50,11 +49,19 @@ func CreateXLSXFile() {
 
 	for _, l := range list {
 		row := sheet.AddRow()
-		row.SetHeightCM(1)
+		row.SetHeightCM(0.8)
 		cell := row.AddCell()
 		cell.Value = l.Name
 		cell = row.AddCell()
+		cell.Value = l.Number
+		cell = row.AddCell()
+		cell.Value = l.Phone
+		cell = row.AddCell()
+		cell.Value = l.Mail
+		cell = row.AddCell()
 		cell.Value = l.PrizeLevel
+		cell = row.AddCell()
+		cell.Value = l.Content
 	}
 
 	err := file.Save(savePath)

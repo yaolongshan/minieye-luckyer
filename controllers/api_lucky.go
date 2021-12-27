@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"code/minieye-luckyer/comm"
 	"code/minieye-luckyer/conf"
 	"code/minieye-luckyer/models/db"
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,8 @@ func ApiGetAllLucky(c *gin.Context) {
 
 // ApiGetLuckyFile 下载中奖名单表格文件
 func ApiGetLuckyFile(c *gin.Context) {
-	filePath := conf.Conf.RootPath + "/files/中奖名单.xlsx"
+	comm.CreateXLSXFile()
+	filePath := conf.Conf.RootPath + "/files/info.xlsx"
 	fileTmp, _ := os.Open(filePath)
 	defer fileTmp.Close()
 	fileName := path.Base(filePath)
