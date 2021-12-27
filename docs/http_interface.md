@@ -120,7 +120,9 @@ HTTP: `GET`
 
 ```json
 {
-  	"Priezs":[
+  	"Status": true,
+  	"Count": 5,
+  	"Priezs": [
       	{
       	  "ID": 1,
           "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
@@ -167,18 +169,18 @@ HTTP: `DELETE`
 http://localhost:8080/api/prize/delete?id=1&count=10
 ```
 
-
-
 ##### 获取中奖名单列表
 
 路径: `/api/lucky/list`
 
 HTTP: `GET`
 
-##### 返回示例:
+返回示例:
 
 ```json
 {
+  	"Status": true,
+  	"Count": 20,
   	"LuckyList": [
       {
       	"ID": 1,
