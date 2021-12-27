@@ -32,7 +32,8 @@ func init() {
 		v1.GET("/lucky/random", api.ApiGetRandom)
 		//图片预览
 		v1.GET("/images/:name", api.ApiImagesPreview)
-
+		//抽祝福语 greetings
+		//v1.GET("/greetings/random")
 	}
 }
 
