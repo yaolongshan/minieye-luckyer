@@ -40,6 +40,8 @@ func init() {
 		v1.GET("/images/:name", api.ApiImagesPreview)
 		//短信接口
 		v1.POST("/sms/send", api.ApiSendSMS)
+		//钉钉消息通知接口
+		v1.POST("/ding/send", api.ApiSendDingDing)
 		//抽祝福语 greetings
 		//v1.GET("/greetings/random")
 	}

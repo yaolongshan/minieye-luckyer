@@ -30,6 +30,7 @@ func SendDingDingMsg(
 	userName string,
 	awardLevel string,
 ) error {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	accessToken, err := genAccessToken(appKey, appSecret)
 	if err != nil {
 		log.Printf("genAccessToken failed, err = %v", err)
