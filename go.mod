@@ -3,11 +3,12 @@ module code/minieye-luckyer
 go 1.16
 
 require (
-	github.com/alibabacloud-go/darabonba-openapi v0.1.12
+	github.com/alibabacloud-go/darabonba-openapi v0.1.14
+	github.com/alibabacloud-go/dingtalk v1.2.20
 	github.com/alibabacloud-go/dysmsapi-20170525/v2 v2.0.8
 	github.com/alibabacloud-go/tea v1.1.17
 	github.com/alibabacloud-go/tea-console v1.0.0
-	github.com/alibabacloud-go/tea-utils v1.3.9
+	github.com/alibabacloud-go/tea-utils v1.4.3
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
