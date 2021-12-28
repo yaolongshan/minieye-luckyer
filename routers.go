@@ -30,6 +30,9 @@ func init() {
 		v1.GET("/lucky/list", api.ApiGetAllLucky)
 		//下载中奖名单表格文件
 		v1.GET("/lucky/file", api.ApiGetLuckyFile)
+		//未中奖(阳光普照奖)名单列表
+		v1.GET("/lucky/notlist", api.ApiGetNotLucky)
+		//下载未中奖(阳光普照奖)名单表格文件
 		//抽奖接口
 		v1.GET("/lucky/random", api.ApiGetRandom)
 		//图片预览

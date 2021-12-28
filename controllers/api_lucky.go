@@ -32,3 +32,28 @@ func ApiGetLuckyFile(c *gin.Context) {
 	c.Header("Content-Transfer-Encoding", "binary")
 	c.File(filePath)
 }
+
+// ApiGetNotLucky 获取未中奖名单 -> 阳光普照奖
+func ApiGetNotLucky(c *gin.Context) {
+	users := db.GetNotLuckyUserList()
+	count := db.GetNotLuckyUserListCount()
+	usersLen := len(users)
+	var luckyList = make([]db.TBLucky, usersLen)
+	for i := 0; i < usersLen; i++ {
+		luckyList[i].ID = uint(i + 1)
+		luckyList[i].CreatedAt = users[i].CreatedAt
+		luckyList[i].UpdatedAt = users[i].UpdatedAt
+		luckyList[i].DeletedAt = users[i].DeletedAt
+		luckyList[i].UserID = int(users[i].ID)
+		luckyList[i].Name = users[i].Name
+		luckyList[i].Number = users[i].Number
+		luckyList[i].Phone = users[i].Phone
+		luckyList[i].Mail = users[i].Mail
+		luckyList[i].PrizeLevel = "阳光普照奖"
+		luckyList[i].Content = "京东卡/沃尔玛购物卡"
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"Status":    true,
+		"Count":     count,
+		"LuckyList": luckyList})
+}

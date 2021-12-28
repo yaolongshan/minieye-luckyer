@@ -33,6 +33,12 @@ func GetNotLuckyUserList() (users []TBUser) {
 	return users
 }
 
+// GetNotLuckyUserListCount 获取未中奖的员工数量
+func GetNotLuckyUserListCount() (count int) {
+	db.Model(&TBUser{}).Where("is_lucky = ?", false).Count(&count)
+	return count
+}
+
 // GetNotLuckyFullTimeUserList 获取未中奖的全职员工，不包括实习生
 func GetNotLuckyFullTimeUserList() (users []TBUser) {
 	db.Where("is_lucky = ?", false).Where("type LIKE ?", "%全职%").Find(&users)
