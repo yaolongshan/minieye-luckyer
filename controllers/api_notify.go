@@ -41,9 +41,7 @@ func ApiSendDingDing(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	err := services.SendDingDingMsg("dinggoy40j72loamriym",
-		"UR66MipyIFSRD1vMZv7jB2iNKFVtdaIZ-K1qFP6qPajid5gXyXyqIg6Xs53RSfC0",
-		r.Phone, r.Name, r.Content)
+	err := services.SendDingDingMsg(r.Phone, r.Name, r.Content)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,

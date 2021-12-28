@@ -10,6 +10,7 @@ type config struct {
 	RootPath   string `json:"RootPath"`   // 项目根目录
 	AccessPath string `json:"AccessPath"` // 服务访问url根路径
 	SMS        sms    `json:"SMS"`        // 短信配置
+	DingDing   ding   `json:"DingDing"`   // 钉钉消息配置
 }
 
 type sms struct {
@@ -17,6 +18,12 @@ type sms struct {
 	AccessKeySecret string `json:"AccessKeySecret"` // KeySecret
 	SignName        string `json:"SignName"`        // 短信签名
 	TemplateCode    string `json:"TemplateCode"`    // 短信模板号
+}
+
+type ding struct {
+	// 钉钉消息接口配置
+	AppKey    string `json:"AppKey"`
+	AppSecret string `json:"AppSecret"`
 }
 
 var Conf config

@@ -2,6 +2,7 @@ package services
 
 import (
 	"bytes"
+	"code/minieye-luckyer/conf"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -15,6 +16,7 @@ import (
 	"github.com/alibabacloud-go/tea/tea"
 )
 
+// SendDingDingMsg
 /*
 @brief: 发送钉钉消息给指定用户
 @param appKey: 钉钉机器人的 appKey
@@ -24,12 +26,12 @@ import (
 @param awardLevel：奖品名字
 */
 func SendDingDingMsg(
-	appKey string,
-	appSecret string,
 	userPhone string,
 	userName string,
 	awardLevel string,
 ) error {
+	appKey := conf.Conf.DingDing.AppKey
+	appSecret := conf.Conf.DingDing.AppSecret
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	accessToken, err := genAccessToken(appKey, appSecret)
 	if err != nil {
@@ -179,7 +181,7 @@ func getUserIDByPhone(accessToken string, userPhone string) (string, error) {
  * @return Client
  * @throws Exception
  */
-func CreateClient() (_result *dingtalkrobot_1_0.Client, _err error) {
+func _createClient() (_result *dingtalkrobot_1_0.Client, _err error) {
 	config := &openapi.Config{}
 	config.Protocol = tea.String("https")
 	config.RegionId = tea.String("central")
@@ -198,7 +200,7 @@ func sendMsg(
 	awardLevel string,
 	accessToken string,
 ) (_err error) {
-	client, _err := CreateClient()
+	client, _err := _createClient()
 	if _err != nil {
 		return _err
 	}
@@ -256,16 +258,3 @@ func sendMsg(
 	log.Printf("_main end\n")
 	return _err
 }
-
-// func main() {
-// 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-// 	if err := SendDingDingMsg(
-// 		"dinggoy40j72loamriym",
-// 		"UR66MipyIFSRD1vMZv7jB2iNKFVtdaIZ-K1qFP6qPajid5gXyXyqIg6Xs53RSfC0",
-// 		"15960389469",
-// 		"黄剑",
-// 		"特等奖，RTX3090显卡一张",
-// 	); err != nil {
-// 		panic(err)
-// 	}
-// }
