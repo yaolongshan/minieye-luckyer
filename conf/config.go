@@ -40,4 +40,7 @@ func LoadLocalConf() {
 		fmt.Println("local_conf.json decoder failed", err.Error())
 		panic(err)
 	}
+	if Conf.RootPath == "" || Conf.AccessPath == "" {
+		panic("请检查本地配置信息, RootPath 和 AccessPath 是必填字段")
+	}
 }
