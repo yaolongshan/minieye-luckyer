@@ -1,6 +1,7 @@
 package services
 
 import (
+	"code/minieye-luckyer/conf"
 	"fmt"
 	openapi "github.com/alibabacloud-go/darabonba-openapi/client"
 	dysmsapi20170525 "github.com/alibabacloud-go/dysmsapi-20170525/v2/client"
@@ -32,15 +33,15 @@ func createClient(accessKeyId *string, accessKeySecret *string) (_result *dysmsa
 }
 
 func SendSMS(name, content, phone string) error {
-	client, _err := createClient(tea.String("LTAI5t6ge92bfX9BwgujMTGP"), tea.String("v3NgU2fall4tbacojpx3VUYp7MvVR1"))
+	client, _err := createClient(tea.String(conf.Conf.SMS.AccessKeyId), tea.String(conf.Conf.SMS.AccessKeySecret))
 	if _err != nil {
 		return _err
 	}
 
 	sendSmsRequest := &dysmsapi20170525.SendSmsRequest{
-		SignName:      tea.String("深圳佑驾"),
+		SignName:      tea.String(conf.Conf.SMS.SignName),
 		PhoneNumbers:  tea.String(phone),
-		TemplateCode:  tea.String("SMS_230642710"),
+		TemplateCode:  tea.String(conf.Conf.SMS.TemplateCode),
 		TemplateParam: tea.String(fmt.Sprintf("{\"name\":\"%v\",\"rank\":\"%v\"}", name, content)),
 	}
 	resp, _err := client.SendSms(sendSmsRequest)
