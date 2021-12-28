@@ -33,6 +33,12 @@ func GetNotLuckyUserList() (users []TBUser) {
 	return users
 }
 
+// GetNotLuckyFullTimeUserList 获取未中奖的全职员工，不包括实习生
+func GetNotLuckyFullTimeUserList() (users []TBUser) {
+	db.Where("is_lucky = ?", false).Where("type LIKE ?", "%全职%").Find(&users)
+	return users
+}
+
 // AddUser 添加员工
 func AddUser(name, phone, type_, number, contract, mail string) {
 	user := &TBUser{
