@@ -206,6 +206,42 @@ HTTP: `GET`
 
 HTTP: `GET`
 
+##### 🚄 获取阳光普照奖列表
+
+路径: `/api/lucky/notlist`
+
+HTTP: `GET`
+
+返回示例:
+
+```json
+{
+  "Status": true,
+  "Count": 20,
+  "LuckyList": [
+      {
+      	"ID": 1,
+        "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
+        "UpdatedAt": "2021-12-21T17:22:27.732045+08:00",
+        "DeletedAt": null,
+        "UserID": 225,
+        "Name": "张三",
+        "Number": "00001",
+        "Phone": "18088888888",
+        "Mail": "zhangsan@minieye.cc",
+        "PrizeLevel": "阳光普照奖",
+        "Content": "京东卡/沃尔玛购物卡"
+      }
+  ]
+}
+```
+
+##### 🚔 下载阳光普照奖表格文件
+
+路径: `/api/lucky/notfile`
+
+HTTP: `GET`
+
 ##### 🚜 抽奖接口
 
 路径: `/api/lucky/random`

@@ -43,7 +43,7 @@ func ApiGetRandom(c *gin.Context) {
 	}
 	var results []result
 	for i := 0; i < count; i++ {
-		//拿到没中奖的小伙伴
+		//拿到没中奖的非实习生小伙伴
 		users := db.GetNotLuckyFullTimeUserList()
 		fmt.Println(fmt.Sprintf("本轮共有%v人参与抽奖", len(users)))
 		prize = db.GetPrizeByID(id)
