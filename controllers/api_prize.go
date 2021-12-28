@@ -1,60 +1,109 @@
 package controllers
 
 import (
+	"code/minieye-luckyer/comm"
 	"code/minieye-luckyer/models/db"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 type prize struct {
-	Name string `json:"name"`
-	Sum  int    `json:"sum"`
+	Level       string `json:"level"`
+	Name        string `json:"name"`
+	Sum         int    `json:"sum"`
+	ImageBase64 string `json:"image_base64"`
 }
 
 // ApiAddPrize 添加一个奖项
 func ApiAddPrize(c *gin.Context) {
-	var p prize
-	if err := c.ShouldBindJSON(&p); err != nil {
+	p := &prize{}
+	err := c.ShouldBindJSON(&p)
+	if err != nil {
+		fmt.Println("ShouldBindJSON error")
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": false,
-			"msg":    err.Error()})
+			"Status": false,
+			"Msg":    "json参数错误",
+			"Error":  err.Error()})
 		return
 	}
-	err := db.AddPrize(p.Name, p.Sum)
+	b, urlOrMsg := comm.Base64SaveImage(p.ImageBase64)
+	if !b {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "图片数据错误",
+			"Error":  urlOrMsg})
+		return
+	}
+	err = db.AddPrize(p.Level, p.Name, urlOrMsg, p.Sum)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": false,
-			"msg":    err.Error()})
+			"Status": false,
+			"Msg":    "奖项级别不能重复",
+			"Error":  err.Error()})
 		return
 	}
+	prizeInfo := db.GetPrizeByLevel(p.Level)
 	c.JSON(http.StatusOK, gin.H{
-		"status": true,
-		"msg":    "ok"})
+		"Status": true,
+		"Msg":    "ok",
+		"Prize":  prizeInfo})
 }
 
 // ApiGetAllPrize 奖项列表
 func ApiGetAllPrize(c *gin.Context) {
 	prizes := db.GetPrizeList()
-	c.JSON(http.StatusOK, gin.H{"prizes": prizes})
+	count := db.PrizeCount()
+	c.JSON(http.StatusOK, gin.H{
+		"Status": true,
+		"Count":  count,
+		"Prizes": prizes})
 }
 
 // ApiUpdatePrize 修改奖项的数量
 func ApiUpdatePrize(c *gin.Context) {
-	var p prize
-	if err := c.ShouldBindJSON(&p); err != nil {
+	type req struct {
+		ID  int `json:"id"`
+		Sum int    `json:"sum"`
+	}
+	var r req
+	if err := c.ShouldBindJSON(&r); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": false,
-			"msg":    err.Error()})
+			"Status": false,
+			"Msg":    "json参数错误",
+			"Error":  err.Error()})
 		return
 	}
-	err := db.UpdatePrize(p.Name, p.Sum)
+	err := db.UpdatePrize(r.ID, r.Sum)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": false,
-			"msg":    err.Error()})
+			"Status": false,
+			"Msg":    "修改失败",
+			"Error":  err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status": true,
-		"msg":    "ok"})
+		"Status": true,
+		"Msg":    "ok"})
+}
+
+// ApiDelPrize 删除一个奖项
+func ApiDelPrize(c *gin.Context) {
+	id, err := strconv.Atoi(c.Query("id"))
+	if err != nil || id <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "id只能是非0正整数",
+			"Error":  err.Error()})
+		return
+	}
+	if err := db.PrizeDeleteByID(id); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "删除失败",
+			"Error":  err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"Status": true, "Msg": "删除成功"})
 }

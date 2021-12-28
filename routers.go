@@ -24,12 +24,20 @@ func init() {
 		v1.GET("/prize/list", api.ApiGetAllPrize)
 		//设置奖项数量
 		v1.POST("/prize/update", api.ApiUpdatePrize)
+		//删除一个奖项
+		v1.DELETE("/prize/delete", api.ApiDelPrize)
 		//中奖名单列表
 		v1.GET("/lucky/list", api.ApiGetAllLucky)
 		//下载中奖名单表格文件
 		v1.GET("/lucky/file", api.ApiGetLuckyFile)
 		//抽奖接口
-		v1.GET("/random", api.ApiGetRandom)
+		v1.GET("/lucky/random", api.ApiGetRandom)
+		//图片预览
+		v1.GET("/images/:name", api.ApiImagesPreview)
+		//短信接口
+		v1.POST("/sms/send", api.ApiSendSMS)
+		//抽祝福语 greetings
+		//v1.GET("/greetings/random")
 	}
 }
 

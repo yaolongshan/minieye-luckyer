@@ -1,6 +1,28 @@
 package conf
 
-var Port = "8080"
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
 
-// RootPath 项目根目录
-var RootPath = "/Users/yaolongshan/go/src/code/minieye-luckyer"
+type config struct {
+	RootPath   string `json:"RootPath"`
+	AccessPath string `json:"AccessPath"`
+}
+
+var Conf config
+
+func LoadLocalConf() {
+	file, err := os.Open("local_conf.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&Conf)
+	if err != nil {
+		fmt.Println("Decoder failed", err.Error())
+		panic(err)
+	}
+}

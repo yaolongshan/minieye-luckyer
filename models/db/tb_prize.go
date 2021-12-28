@@ -7,8 +7,10 @@ import (
 // TBPrize 奖项设置表
 type TBPrize struct {
 	gorm.Model
-	Name string `gorm:"unique;not null"` // 奖项名称 特等奖、一等奖
-	Sum  int    // 奖项数量
+	Level    string `gorm:"unique;not null"` // 奖项级别
+	Name     string // 奖品名称
+	Sum      int    // 奖项数量
+	ImageUrl string
 }
 
 // GetPrizeList 奖项列表
@@ -17,32 +19,51 @@ func GetPrizeList() (prizes []TBPrize) {
 	return prizes
 }
 
+// PrizeCount 数量
+func PrizeCount() (count int) {
+	db.Model(&TBPrize{}).Count(&count)
+	return count
+}
+
 // UpdatePrize 修改奖项的数量
-func UpdatePrize(Name string, Sum int) error {
-	err := db.Model(&TBPrize{}).Where("name = ?", Name).Update("sum", Sum).Error
+func UpdatePrize(id, sum int) error {
+	err := db.Model(&TBPrize{}).Where("id = ?", id).Update("sum", sum).Error
 	return err
 }
 
 // AddPrize 添加一个奖项
-func AddPrize(Name string, Sum int) error {
+func AddPrize(level, name, url string, sum int) error {
 	p := &TBPrize{
-		Name: Name,
-		Sum:  Sum,
+		Level:    level,
+		Name:     name,
+		Sum:      sum,
+		ImageUrl: url,
 	}
 	err := db.Create(&p).Error
 	return err
 }
 
 // GetPrizeByID 获取一个奖项的信息
-func GetPrizeByID(ID int) (p TBPrize) {
-	db.Where("id = ?", ID).Find(&p)
+func GetPrizeByID(id int) (p TBPrize) {
+	db.Where("id = ?", id).Find(&p)
+	return p
+}
+
+// GetPrizeByLevel 获取一个奖项的信息
+func GetPrizeByLevel(level string) (p TBPrize) {
+	db.Where("level = ?", level).Find(&p)
 	return p
 }
 
 // PrizeDegressive 让这个奖项的数量递减
-func PrizeDegressive(ID int) {
-	prize := GetPrizeByID(ID)
-	db.Model(&TBPrize{}).Where("id = ?", ID).Update("sum", prize.Sum-1)
+func PrizeDegressive(id int) {
+	prize := GetPrizeByID(id)
+	db.Model(&TBPrize{}).Where("id = ?", id).Update("sum", prize.Sum-1)
+}
+
+func PrizeDeleteByID(id int) error {
+	err := db.Unscoped().Where("id = ?", id).Delete(&TBPrize{}).Error
+	return err
 }
 
 func (TBPrize) TableName() string {

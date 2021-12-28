@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	openapi "github.com/alibabacloud-go/darabonba-openapi/client"
 	dysmsapi20170525 "github.com/alibabacloud-go/dysmsapi-20170525/v2/client"
 	console "github.com/alibabacloud-go/tea-console/client"
@@ -30,7 +31,7 @@ func createClient(accessKeyId *string, accessKeySecret *string) (_result *dysmsa
 	return _result, _err
 }
 
-func SendSMS() error{
+func SendSMS(name, content, phone string) error {
 	client, _err := createClient(tea.String("LTAI5t6ge92bfX9BwgujMTGP"), tea.String("v3NgU2fall4tbacojpx3VUYp7MvVR1"))
 	if _err != nil {
 		return _err
@@ -38,9 +39,9 @@ func SendSMS() error{
 
 	sendSmsRequest := &dysmsapi20170525.SendSmsRequest{
 		SignName:      tea.String("深圳佑驾"),
-		PhoneNumbers:  tea.String("18460344692"),
-		TemplateCode:  tea.String("SMS_78550158"),
-		TemplateParam: tea.String("{\"name\":\"山哥\",\"code\":\"666\",\"description\":\"哈哈哈\"}"),
+		PhoneNumbers:  tea.String(phone),
+		TemplateCode:  tea.String("SMS_230642710"),
+		TemplateParam: tea.String(fmt.Sprintf("{\"name\":\"%v\",\"rank\":\"%v\"}", name, content)),
 	}
 	resp, _err := client.SendSms(sendSmsRequest)
 	if _err != nil {
@@ -50,4 +51,3 @@ func SendSMS() error{
 	console.Log(util.ToJSONString(tea.ToMap(resp)))
 	return _err
 }
-

@@ -27,17 +27,28 @@ func GetUserList() (users []TBUser) {
 	return users
 }
 
+// GetNotLuckyUserList 获取未中奖的员工
+func GetNotLuckyUserList() (users []TBUser) {
+	db.Where("is_lucky = ?", false).Find(&users)
+	return users
+}
+
 // AddUser 添加员工
-func AddUser(Name, Phone, Type, Number, Contract, Mail string) {
+func AddUser(name, phone, type_, number, contract, mail string) {
 	user := &TBUser{
-		Name:     Name,
-		Phone:    Phone,
-		Type:     Type,
-		Number:   Number,
-		Contract: Contract,
-		Mail:     Mail,
+		Name:     name,
+		Phone:    phone,
+		Type:     type_,
+		Number:   number,
+		Contract: contract,
+		Mail:     mail,
 	}
 	db.Create(&user)
+}
+
+// UserHasLucky 标记员工中过奖
+func UserHasLucky(id int, is bool) {
+	db.Model(&TBUser{}).Where("id = ?", id).Update(&TBUser{IsLucky: is})
 }
 
 func (TBUser) TableName() string {

@@ -13,19 +13,27 @@ import (
 // ApiGetRandom 随机抽奖，根据每个奖项的可中奖数量，返回中奖人员
 func ApiGetRandom(c *gin.Context) {
 	id, err := strconv.Atoi(c.Query("id")) // 奖项id
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err != nil || id < 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "id参数错误",
+			"Error":  err.Error()})
 		return
 	}
 	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err != nil || count <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "count参数错误",
+			"Error":  err.Error()})
 		return
 	}
-	users := db.GetUserList()
 	prize := db.GetPrizeByID(id)
 	if prize.Sum <= 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "该奖项已抽奖完毕"})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "该奖项已抽奖完毕",
+			"Error":  err.Error()})
 		return
 	}
 	type result struct {
@@ -36,6 +44,9 @@ func ApiGetRandom(c *gin.Context) {
 	}
 	var results []result
 	for i := 0; i < count; i++ {
+		//拿到没中奖的小伙伴
+		users := db.GetNotLuckyUserList()
+		fmt.Println("www", len(users))
 		prize = db.GetPrizeByID(id)
 		if prize.Sum <= 0 {
 			fmt.Println("抽完咯")
@@ -43,12 +54,6 @@ func ApiGetRandom(c *gin.Context) {
 		}
 		index, _ := rand.Int(rand.Reader, big.NewInt(int64(len(users))))
 		user := users[index.Int64()]
-		//如果这人已经中奖过了
-		if db.QueryLucky(int(user.ID)) {
-			fmt.Println(user.Name, "这人已经中过奖了")
-			i--
-			continue
-		}
 		r := result{
 			Name:   user.Name,
 			Phone:  user.Phone,
@@ -57,9 +62,16 @@ func ApiGetRandom(c *gin.Context) {
 		}
 		results = append(results, r)
 		//保存到中奖信息
-		db.AddLucky(int(user.ID), user.Name, prize.Name)
+		db.AddLucky(int(user.ID), user.Name, user.Number, user.Phone, user.Mail, prize.Level, prize.Name)
 		//奖项数量递减一下
 		db.PrizeDegressive(int(prize.ID))
+		//标记一下用户表中的已中奖字段
+		db.UserHasLucky(int(user.ID), true)
 	}
-	c.JSON(http.StatusOK, results)
+	prize = db.GetPrizeByID(id)
+	c.JSON(http.StatusOK, gin.H{
+		"Status":   true,
+		"Results":  results,
+		"PrizeSum": prize.Sum,
+	})
 }

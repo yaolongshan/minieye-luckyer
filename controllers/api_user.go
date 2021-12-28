@@ -19,7 +19,7 @@ type User struct {
 func ApiGetAllUser(c *gin.Context) {
 	users := db.GetUserList()
 	count := db.UserCount()
-	c.JSON(http.StatusOK, gin.H{"Count": count, "Users": users})
+	c.JSON(http.StatusOK, gin.H{"Status": true, "Count": count, "Users": users})
 }
 
 // ApiAddUser 添加员工
@@ -28,12 +28,13 @@ func ApiAddUser(c *gin.Context) {
 	if err := c.ShouldBindJSON(&user); err != nil {
 		// 返回错误信息
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": false,
-			"msg":    err.Error()})
+			"Status": false,
+			"Msg":    "添加失败",
+			"Error":  err.Error()})
 		return
 	}
 	db.AddUser(user.Name, user.Phone, user.Type, user.Number, user.Contract, user.Mail)
 	c.JSON(http.StatusOK, gin.H{
-		"status": true,
-		"msg":    "ok"})
+		"Status": true,
+		"Msg":    "ok"})
 }
