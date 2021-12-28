@@ -25,7 +25,7 @@ func RandName() string {
 	return s
 }
 
-func CreateXLSXFile() {
+func CreateLuckyXLSXFile() {
 	list := db.GetLuckyList()
 	savePath := fmt.Sprintf("%v/files/info.xlsx", conf.Conf.RootPath)
 	file := xlsx.NewFile()
@@ -48,6 +48,66 @@ func CreateXLSXFile() {
 	}
 
 	for _, l := range list {
+		row := sheet.AddRow()
+		row.SetHeightCM(0.8)
+		cell := row.AddCell()
+		cell.Value = l.Name
+		cell = row.AddCell()
+		cell.Value = l.Number
+		cell = row.AddCell()
+		cell.Value = l.Phone
+		cell = row.AddCell()
+		cell.Value = l.Mail
+		cell = row.AddCell()
+		cell.Value = l.PrizeLevel
+		cell = row.AddCell()
+		cell.Value = l.Content
+	}
+
+	err := file.Save(savePath)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func CreateNotLuckyXLSXFile(){
+	users := db.GetNotLuckyUserList()
+	usersLen := len(users)
+	var luckyList = make([]db.TBLucky, usersLen)
+	for i := 0; i < usersLen; i++ {
+		luckyList[i].ID = uint(i + 1)
+		luckyList[i].CreatedAt = users[i].CreatedAt
+		luckyList[i].UpdatedAt = users[i].UpdatedAt
+		luckyList[i].DeletedAt = users[i].DeletedAt
+		luckyList[i].UserID = int(users[i].ID)
+		luckyList[i].Name = users[i].Name
+		luckyList[i].Number = users[i].Number
+		luckyList[i].Phone = users[i].Phone
+		luckyList[i].Mail = users[i].Mail
+		luckyList[i].PrizeLevel = "阳光普照奖"
+		luckyList[i].Content = "京东卡/沃尔玛购物卡"
+	}
+	savePath := fmt.Sprintf("%v/files/not.xlsx", conf.Conf.RootPath)
+	file := xlsx.NewFile()
+	sheet, _ := file.AddSheet("Sheet1")
+	{
+		row := sheet.AddRow()
+		row.SetHeightCM(0.8) //设置每行的高度
+		cell := row.AddCell()
+		cell.Value = "姓名"
+		cell = row.AddCell()
+		cell.Value = "工号"
+		cell = row.AddCell()
+		cell.Value = "手机号"
+		cell = row.AddCell()
+		cell.Value = "邮箱"
+		cell = row.AddCell()
+		cell.Value = "奖项等级"
+		cell = row.AddCell()
+		cell.Value = "奖品内容"
+	}
+
+	for _, l := range luckyList {
 		row := sheet.AddRow()
 		row.SetHeightCM(0.8)
 		cell := row.AddCell()

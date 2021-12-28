@@ -6,7 +6,6 @@ import (
 	"code/minieye-luckyer/models/db"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"os"
 	"path"
 )
 
@@ -22,10 +21,10 @@ func ApiGetAllLucky(c *gin.Context) {
 
 // ApiGetLuckyFile 下载中奖名单表格文件
 func ApiGetLuckyFile(c *gin.Context) {
-	comm.CreateXLSXFile()
+	comm.CreateLuckyXLSXFile()
 	filePath := conf.Conf.RootPath + "/files/info.xlsx"
-	fileTmp, _ := os.Open(filePath)
-	defer fileTmp.Close()
+	//fileTmp, _ := os.Open(filePath)
+	//defer fileTmp.Close()
 	fileName := path.Base(filePath)
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+fileName)
@@ -56,4 +55,15 @@ func ApiGetNotLucky(c *gin.Context) {
 		"Status":    true,
 		"Count":     count,
 		"LuckyList": luckyList})
+}
+
+// ApiGetNotLuckyFile 下载未中奖名单表格文件
+func ApiGetNotLuckyFile(c *gin.Context) {
+	comm.CreateNotLuckyXLSXFile()
+	filePath := conf.Conf.RootPath + "/files/not.xlsx"
+	fileName := path.Base(filePath)
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename="+fileName)
+	c.Header("Content-Transfer-Encoding", "binary")
+	c.File(filePath)
 }
