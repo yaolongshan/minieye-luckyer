@@ -23,7 +23,7 @@ func UserCount() (count int) {
 
 // GetUserList 所有员工
 func GetUserList() (users []TBUser) {
-	db.Find(&users)
+	db.Order("number desc").Find(&users)
 	return users
 }
 

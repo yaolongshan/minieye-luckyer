@@ -29,11 +29,10 @@ func ApiGetRandom(c *gin.Context) {
 		return
 	}
 	prize := db.GetPrizeByID(id)
-	if prize.Sum <= 0 {
+	if prize.AlreadyUsed >= prize.Sum {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
-			"Msg":    "该奖项已抽奖完毕",
-			"Error":  err.Error()})
+			"Msg":    "该奖项已抽奖完毕"})
 		return
 	}
 	type result struct {
@@ -46,9 +45,9 @@ func ApiGetRandom(c *gin.Context) {
 	for i := 0; i < count; i++ {
 		//拿到没中奖的小伙伴
 		users := db.GetNotLuckyUserList()
-		fmt.Println("www", len(users))
+		fmt.Println(fmt.Sprintf("本轮共有%v人参与抽奖", len(users)))
 		prize = db.GetPrizeByID(id)
-		if prize.Sum <= 0 {
+		if prize.AlreadyUsed >= prize.Sum {
 			fmt.Println("抽完咯")
 			break
 		}
@@ -63,8 +62,8 @@ func ApiGetRandom(c *gin.Context) {
 		results = append(results, r)
 		//保存到中奖信息
 		db.AddLucky(int(user.ID), user.Name, user.Number, user.Phone, user.Mail, prize.Level, prize.Name)
-		//奖项数量递减一下
-		db.PrizeDegressive(int(prize.ID))
+		//奖项已抽数量递增
+		db.PrizeIncrease(int(prize.ID))
 		//标记一下用户表中的已中奖字段
 		db.UserHasLucky(int(user.ID), true)
 	}

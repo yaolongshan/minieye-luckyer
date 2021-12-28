@@ -7,10 +7,11 @@ import (
 // TBPrize 奖项设置表
 type TBPrize struct {
 	gorm.Model
-	Level    string `gorm:"unique;not null"` // 奖项级别
-	Name     string // 奖品名称
-	Sum      int    // 奖项数量
-	ImageUrl string
+	Level       string `gorm:"unique;not null"` // 奖项级别
+	Name        string // 奖品名称
+	Sum         int    // 奖项数量
+	AlreadyUsed int    // 已经抽的数量
+	ImageUrl    string
 }
 
 // GetPrizeList 奖项列表
@@ -61,9 +62,16 @@ func PrizeDegressive(id int) {
 	db.Model(&TBPrize{}).Where("id = ?", id).Update("sum", prize.Sum-1)
 }
 
+// PrizeDeleteByID 删除一个
 func PrizeDeleteByID(id int) error {
 	err := db.Unscoped().Where("id = ?", id).Delete(&TBPrize{}).Error
 	return err
+}
+
+// PrizeIncrease 奖项已抽数量递增
+func PrizeIncrease(id int) {
+	prize := GetPrizeByID(id)
+	db.Model(&TBPrize{}).Where("id = ?", id).Update("already_used", prize.AlreadyUsed+1)
 }
 
 func (TBPrize) TableName() string {
