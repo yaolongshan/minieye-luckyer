@@ -132,7 +132,7 @@ HTTP: `GET`
           "Level": "一等奖", // 奖项级别
           "Name": "神秘大礼包", // 奖品名称
           "Sum": 10,   // 奖项数量
-          "Remaining": 10, // 剩余数量
+          "AlreadyUsed": 10, // 已抽数量
           "ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
         }
     ]

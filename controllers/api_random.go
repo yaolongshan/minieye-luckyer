@@ -29,7 +29,7 @@ func ApiGetRandom(c *gin.Context) {
 		return
 	}
 	prize := db.GetPrizeByID(id)
-	if prize.Remaining <= 0 {
+	if prize.AlreadyUsed >= prize.Sum {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "该奖项已抽奖完毕"})
@@ -44,7 +44,7 @@ func ApiGetRandom(c *gin.Context) {
 	var results []result
 	for i := 0; i < count; i++ {
 		prize = db.GetPrizeByID(id)
-		if prize.Remaining <= 0 {
+		if prize.AlreadyUsed >= prize.Sum {
 			fmt.Println("抽完咯")
 			break
 		}
@@ -62,8 +62,8 @@ func ApiGetRandom(c *gin.Context) {
 		results = append(results, r)
 		//保存到中奖信息
 		db.AddLucky(int(user.ID), user.Name, user.Number, user.Phone, user.Mail, prize.Level, prize.Name)
-		//奖项剩余数量递减
-		db.PrizeDegressive(int(prize.ID))
+		//奖项已抽数量递增
+		db.PrizeIncrease(int(prize.ID))
 		//标记一下用户表中的已中奖字段
 		db.UserHasLucky(int(user.ID), true)
 	}
@@ -71,6 +71,6 @@ func ApiGetRandom(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"Status":   true,
 		"Results":  results,
-		"PrizeRemaining": prize.Remaining,
+		"PrizeRemaining": prize.Sum - prize.AlreadyUsed,
 	})
 }
