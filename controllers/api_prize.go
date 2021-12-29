@@ -3,7 +3,6 @@ package controllers
 import (
 	"code/minieye-luckyer/comm"
 	"code/minieye-luckyer/models/db"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -21,7 +20,6 @@ func ApiAddPrize(c *gin.Context) {
 	p := &prize{}
 	err := c.ShouldBindJSON(&p)
 	if err != nil {
-		fmt.Println("ShouldBindJSON error")
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "json参数错误",

@@ -18,6 +18,7 @@ func InitDB() {
 	db.AutoMigrate(&TBUser{})
 	db.AutoMigrate(&TBPrize{})
 	db.AutoMigrate(&TBLucky{})
+	db.AutoMigrate(&TBGreeting{})
 }
 
 func ReadFile() {

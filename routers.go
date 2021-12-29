@@ -42,6 +42,10 @@ func init() {
 		v1.POST("/sms/send", api.ApiSendSMS)
 		//钉钉消息通知接口
 		v1.POST("/ding/send", api.ApiSendDingDing)
+		//祝福语列表
+		v1.GET("/greeting/list", api.ApiGreetingList)
+		//添加一条祝福语
+		v1.POST("/greeting/add", api.ApiAddGreeting)
 		//抽祝福语 greetings
 		//v1.GET("/greetings/random")
 	}

@@ -29,7 +29,7 @@ func ApiAddUser(c *gin.Context) {
 		// 返回错误信息
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
-			"Msg":    "添加失败",
+			"Msg":    "json参数错误",
 			"Error":  err.Error()})
 		return
 	}
