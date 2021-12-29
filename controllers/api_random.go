@@ -71,6 +71,6 @@ func ApiGetRandom(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"Status":   true,
 		"Results":  results,
-		"PrizeSum": prize.Sum,
+		"PrizeRemaining": prize.Remaining,
 	})
 }

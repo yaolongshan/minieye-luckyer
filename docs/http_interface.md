@@ -263,7 +263,7 @@ http://localhost:8080/api/lucky/random?id=1&count=10
 ```json
 {
   	"Status": true,
-  	"PrizeSum": 10, //奖项剩余数量
+  	"PrizeRemaining": 10, //奖项剩余数量
   	"Results": [
       	{
             "Name": "张三",
