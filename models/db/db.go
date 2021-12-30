@@ -21,11 +21,11 @@ func InitDB() {
 	db.AutoMigrate(&TBGreeting{})
 }
 
-func ReadFile() {
-	//var datas []User
-	file, err := xlsx.OpenFile("/Users/yaolongshan/go/src/code/minieye-luckyer/user.xlsx")
+func ReadUserFile(path string) error {
+	file, err := xlsx.OpenFile(path)
 	if err != nil {
 		fmt.Println("open failed:", err)
+		return err
 	}
 	for i, row := range file.Sheets[0].Rows {
 		if i == 0 {
@@ -56,17 +56,20 @@ func ReadFile() {
 			}
 			user.IsLucky = false
 		}
-
-		db.Create(&user)
-		fmt.Println(user)
+		err := db.Create(&user).Error
+		if err != nil {
+			return err
+		}
+		fmt.Println(fmt.Sprintf("成功添加用户: %v ", user.Name))
 	}
-
+	return nil
 }
 
-func ReadGreetingFile(){
-	file, err := xlsx.OpenFile("/Users/yaolongshan/go/src/code/minieye-luckyer/greeting.xlsx")
+func ReadGreetingFile(path string) error {
+	file, err := xlsx.OpenFile(path)
 	if err != nil {
 		fmt.Println("open failed:", err)
+		return err
 	}
 	for i, row := range file.Sheets[0].Rows {
 		if i == 0 {
@@ -77,16 +80,21 @@ func ReadGreetingFile(){
 			text := cell.Value
 			switch i {
 			case 0:
-				fmt.Print("姓名：", text," ")
+				//fmt.Print("姓名：", text, " ")
 				greet.Name = text
 			case 1:
-				fmt.Print("工号：", text," ")
+				//fmt.Print("工号：", text, " ")
 				greet.Number = text
 			case 2:
-				fmt.Print("祝福语：", text," ")
+				//fmt.Print("祝福语：", text, " ")
 				greet.Greeting = text
 			}
 		}
-		db.Create(&greet)
+		err := db.Create(&greet).Error
+		if err != nil {
+			return err
+		}
+		fmt.Println(fmt.Sprintf("成功添加%v的祝福语", greet.Name))
 	}
+	return nil
 }

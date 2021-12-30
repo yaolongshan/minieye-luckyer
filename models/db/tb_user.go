@@ -6,7 +6,7 @@ import (
 
 type TBUser struct {
 	gorm.Model
-	Name     string // 姓名
+	Name     string `gorm:"unique"` // 姓名
 	Phone    string // 手机号
 	Type     string // 员工类型，实习、全职
 	Number   string // 工号
