@@ -50,6 +50,12 @@ func ApiGetRandom(c *gin.Context) {
 		}
 		//拿到没中奖的非实习生小伙伴
 		users := db.GetNotLuckyFullTimeUserList()
+		if len(users) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"Status": false,
+				"Msg":    "抽奖人数不能为0，请检查用户列表中是否有全职类型员工"})
+			return
+		}
 		fmt.Println(fmt.Sprintf("本轮共有%v人参与抽奖", len(users)))
 		index, _ := rand.Int(rand.Reader, big.NewInt(int64(len(users))))
 		user := users[index.Int64()]
