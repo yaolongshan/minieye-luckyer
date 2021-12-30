@@ -1,11 +1,16 @@
 package main
 
+import (
+	"code/minieye-luckyer/conf"
+	"fmt"
+)
+
 func main() {
 	start()
 }
 
 func start(){
-	app.Run("192.168.17.115:8080")
+	app.Run(fmt.Sprintf(":%v", conf.Conf.Port))
 }
 
 func readUserFile(){

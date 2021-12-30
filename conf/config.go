@@ -7,6 +7,7 @@ import (
 )
 
 type config struct {
+	Port       int    `json:"Port"`       // 监听端口
 	RootPath   string `json:"RootPath"`   // 项目根目录
 	AccessPath string `json:"AccessPath"` // 服务访问url根路径
 	SMS        sms    `json:"SMS"`        // 短信配置
