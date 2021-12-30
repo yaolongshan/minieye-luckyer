@@ -70,7 +70,7 @@ func CreateLuckyXLSXFile() {
 	}
 }
 
-func CreateNotLuckyXLSXFile(){
+func CreateNotLuckyXLSXFile() {
 	users := db.GetNotLuckyUserList()
 	usersLen := len(users)
 	var luckyList = make([]db.TBLucky, usersLen)
@@ -150,7 +150,7 @@ func Base64SaveImage(base64Content string) (bool, string) {
 	err = ioutil.WriteFile(filePath, byteData, 0666)
 
 	//拼接访问图片的url
-	imageUrl := fmt.Sprintf("%v/api/images/%v", conf.Conf.AccessPath, fileName)
+	imageUrl := fmt.Sprintf("/api/images/%v", fileName)
 
 	if err != nil {
 		return false, err.Error()
