@@ -62,3 +62,31 @@ func ReadFile() {
 	}
 
 }
+
+func ReadGreetingFile(){
+	file, err := xlsx.OpenFile("/Users/yaolongshan/go/src/code/minieye-luckyer/greeting.xlsx")
+	if err != nil {
+		fmt.Println("open failed:", err)
+	}
+	for i, row := range file.Sheets[0].Rows {
+		if i == 0 {
+			continue
+		}
+		var greet TBGreeting
+		for i, cell := range row.Cells {
+			text := cell.Value
+			switch i {
+			case 0:
+				fmt.Print("姓名：", text," ")
+				greet.Name = text
+			case 1:
+				fmt.Print("工号：", text," ")
+				greet.Number = text
+			case 2:
+				fmt.Print("祝福语：", text," ")
+				greet.Greeting = text
+			}
+		}
+		db.Create(&greet)
+	}
+}
