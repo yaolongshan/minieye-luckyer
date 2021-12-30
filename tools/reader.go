@@ -15,12 +15,13 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:  "init",
-			Usage: "初始化本地数据库",
+			Usage: "初始化本地数据库data.db",
 			Action: func(c *cli.Context) error {
 				err := os.Remove(fmt.Sprintf("%v/data.db", conf.Conf.RootPath))
 				if err != nil {
 					return err
 				}
+				db.InitDB()
 				return nil
 			},
 		},
