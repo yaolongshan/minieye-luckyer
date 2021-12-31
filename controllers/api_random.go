@@ -44,20 +44,21 @@ func ApiGetRandom(c *gin.Context) {
 	var results []result
 	for i := 0; i < count; i++ {
 		prize = db.GetPrizeByID(id)
-		if prize.AlreadyUsed == prize.Sum {
+		if prize.AlreadyUsed >= prize.Sum {
 			fmt.Println("抽完咯")
 			break
 		}
 		//拿到没中奖的非实习生小伙伴
 		users := db.GetNotLuckyFullTimeUserList()
-		if len(users) == 0 {
+		lenUser := len(users)
+		if lenUser == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"Status": false,
 				"Msg":    "请检查有无未抽奖的用户"})
 			return
 		}
-		fmt.Println(fmt.Sprintf("本轮共有%v人参与抽奖", len(users)))
-		index, _ := rand.Int(rand.Reader, big.NewInt(int64(len(users))))
+		fmt.Println(fmt.Sprintf("第%v轮共有%v人参与抽奖", i+1, lenUser))
+		index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
 		user := users[index.Int64()]
 		r := result{
 			Name:   user.Name,
