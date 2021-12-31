@@ -60,6 +60,7 @@ func AddUser(name, phone, type_, number, contract, mail string) {
 		Number:   number,
 		Contract: contract,
 		Mail:     mail,
+		IsLucky:  false,
 	}
 	db.Create(&user)
 }
