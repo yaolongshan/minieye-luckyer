@@ -4,6 +4,7 @@ import (
 	"code/minieye-luckyer/models/db"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 // ApiGreetingList 祝福语列表
@@ -41,6 +42,16 @@ func ApiAddGreeting(c *gin.Context) {
 }
 
 // ApiRandomGreeting 随机抽祝福语
-func ApiRandomGreeting() {
+func ApiRandomGreeting(c *gin.Context) {
+	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
+	if err != nil || count <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "count参数错误",
+			"Error":  err.Error()})
+		return
+	}
+	//greetings := db.GetAllGreeting()
+	//len_ := len(greetings)
 
 }

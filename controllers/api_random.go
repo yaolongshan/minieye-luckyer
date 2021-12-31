@@ -42,6 +42,8 @@ func ApiGetRandom(c *gin.Context) {
 		Mail   string
 	}
 	var results []result
+	// 参与抽奖的人数
+	var lenUser int
 	for i := 0; i < count; i++ {
 		prize = db.GetPrizeByID(id)
 		if prize.AlreadyUsed >= prize.Sum {
@@ -50,7 +52,7 @@ func ApiGetRandom(c *gin.Context) {
 		}
 		//拿到没中奖的非实习生小伙伴
 		users := db.GetNotLuckyFullTimeUserList()
-		lenUser := len(users)
+		lenUser = len(users)
 		if lenUser == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"Status": false,
@@ -78,6 +80,7 @@ func ApiGetRandom(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"Status":         true,
 		"Count":          len(results),
+		"Participants":   lenUser,
 		"Results":        results,
 		"PrizeRemaining": prize.Sum - prize.AlreadyUsed,
 	})

@@ -8,6 +8,7 @@ type TBGreeting struct {
 	Name     string `gorm:"unique"`
 	Number   string
 	Greeting string
+	IsLucky  bool // 是否中奖
 }
 
 // GreetingCount 祝福语数量
