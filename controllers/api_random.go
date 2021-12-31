@@ -44,7 +44,7 @@ func ApiGetRandom(c *gin.Context) {
 	var results []result
 	for i := 0; i < count; i++ {
 		prize = db.GetPrizeByID(id)
-		if prize.AlreadyUsed >= prize.Sum {
+		if prize.AlreadyUsed == prize.Sum {
 			fmt.Println("抽完咯")
 			break
 		}
@@ -75,8 +75,9 @@ func ApiGetRandom(c *gin.Context) {
 	}
 	prize = db.GetPrizeByID(id)
 	c.JSON(http.StatusOK, gin.H{
-		"Status":   true,
-		"Results":  results,
+		"Status":         true,
+		"Count":          len(results),
+		"Results":        results,
 		"PrizeRemaining": prize.Sum - prize.AlreadyUsed,
 	})
 }
