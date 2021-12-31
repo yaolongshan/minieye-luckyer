@@ -21,6 +21,19 @@ func InitDB() {
 	db.AutoMigrate(&TBGreeting{})
 }
 
+// InitTables 测试用，初始化表，删除数据
+func InitTables() error {
+	db.Model(&TBUser{}).Update("is_lucky", false)
+
+	db.Model(&TBPrize{}).Update("already_used", 0)
+
+	err := db.Unscoped().Delete(&TBLucky{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func ReadUserFile(path string) error {
 	file, err := xlsx.OpenFile(path)
 	if err != nil {
