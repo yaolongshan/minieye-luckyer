@@ -18,7 +18,7 @@ type User struct {
 // ApiGetAllUser 获取所有员工
 func ApiGetAllUser(c *gin.Context) {
 	users := db.GetUserList()
-	count := db.UserCount()
+	count := len(users)
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Count": count, "Users": users})
 }
 

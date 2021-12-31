@@ -52,7 +52,7 @@ func ApiAddPrize(c *gin.Context) {
 // ApiGetAllPrize 奖项列表
 func ApiGetAllPrize(c *gin.Context) {
 	prizes := db.GetPrizeList()
-	count := db.PrizeCount()
+	count := len(prizes)
 	c.JSON(http.StatusOK, gin.H{
 		"Status": true,
 		"Count":  count,

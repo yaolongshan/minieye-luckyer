@@ -8,13 +8,13 @@ import (
 
 // ApiGreetingList 祝福语列表
 func ApiGreetingList(c *gin.Context) {
-	count := db.GreetingCount()
 	list := db.GetAllGreeting()
+	count := len(list)
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Count": count, "Greetings": list})
 }
 
 // ApiAddGreeting 添加
-func ApiAddGreeting(c *gin.Context){
+func ApiAddGreeting(c *gin.Context) {
 	type req struct {
 		Name     string `json:"name"`
 		Number   string `json:"number"`
@@ -38,4 +38,9 @@ func ApiAddGreeting(c *gin.Context){
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Msg": "添加成功"})
+}
+
+// ApiRandomGreeting 随机抽祝福语
+func ApiRandomGreeting() {
+
 }
