@@ -44,8 +44,16 @@ func ApiGetRandom(c *gin.Context) {
 	var results []result
 	// 参与抽奖的人数，这里要包括实习生的人数
 	var participants = db.GetNotLuckyUserListCount()
+	// 全职员工抽奖人数校验
+	if db.GetNotLuckyFullTimeUserCount() == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "请检查有无未抽奖的用户"})
+		return
+	}
 	// 抽奖过程
 	for i := 0; i < count; i++ {
+		// 剩余奖项数量
 		prize = db.GetPrizeByID(id)
 		if prize.AlreadyUsed >= prize.Sum {
 			fmt.Println("抽完咯")
@@ -55,10 +63,7 @@ func ApiGetRandom(c *gin.Context) {
 		users := db.GetNotLuckyFullTimeUserList()
 		lenUser := len(users)
 		if lenUser == 0 {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Status": false,
-				"Msg":    "请检查有无未抽奖的用户"})
-			return
+			break
 		}
 		fmt.Println(fmt.Sprintf("第%v轮共有%v人参与抽奖", i+1, lenUser))
 		index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))

@@ -25,6 +25,8 @@ func InitDB() {
 func InitTables() error {
 	db.Model(&TBUser{}).Update("is_lucky", false)
 
+	db.Model(&TBGreeting{}).Update("is_lucky", false)
+
 	db.Model(&TBPrize{}).Update("already_used", 0)
 
 	err := db.Unscoped().Delete(&TBLucky{}).Error
@@ -67,8 +69,8 @@ func ReadUserFile(path string) error {
 				//fmt.Print("邮箱：", text," ")
 				user.Mail = text
 			}
-			user.IsLucky = false
 		}
+		user.IsLucky = false
 		err := db.Create(&user).Error
 		if err != nil {
 			return err

@@ -61,15 +61,18 @@ func ApiRandomGreeting(c *gin.Context) {
 	var results []result
 	// 本次抽祝福语的数量
 	participants := len(db.GetNotLuckyGreeting())
+	if participants == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "请检查有无未抽奖的祝福语"})
+		return
+	}
 	for i := 0; i < count; i++ {
 		// 获取未中奖的祝福语
 		greetings := db.GetNotLuckyGreeting()
 		len_ := len(greetings)
 		if len_ == 0 {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Status": false,
-				"Msg":    "请检查有无未抽奖的祝福语"})
-			return
+			break
 		}
 		index, _ := rand.Int(rand.Reader, big.NewInt(int64(len_)))
 		greeting := greetings[index.Int64()]
