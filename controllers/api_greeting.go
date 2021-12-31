@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"code/minieye-luckyer/models/db"
+	"crypto/rand"
 	"github.com/gin-gonic/gin"
+	"math/big"
 	"net/http"
 	"strconv"
 )
@@ -51,7 +53,39 @@ func ApiRandomGreeting(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	//greetings := db.GetAllGreeting()
-	//len_ := len(greetings)
-
+	type result struct {
+		Name     string
+		Number   string
+		Greeting string
+	}
+	var results []result
+	// 本次抽祝福语的数量
+	participants := len(db.GetNotLuckyGreeting())
+	for i := 0; i < count; i++ {
+		// 获取未中奖的祝福语
+		greetings := db.GetNotLuckyGreeting()
+		len_ := len(greetings)
+		if len_ == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"Status": false,
+				"Msg":    "请检查有无未抽奖的祝福语"})
+			return
+		}
+		index, _ := rand.Int(rand.Reader, big.NewInt(int64(len_)))
+		greeting := greetings[index.Int64()]
+		r := result{
+			Name:     greeting.Name,
+			Number:   greeting.Number,
+			Greeting: greeting.Greeting,
+		}
+		results = append(results, r)
+		//标记这条祝福语已中奖
+		db.GreetingHasLucky(int(greeting.ID), true)
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"Status":         true,
+		"Count":          len(results),
+		"Participants":   participants,
+		"Results":        results,
+	})
 }

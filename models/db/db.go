@@ -103,6 +103,7 @@ func ReadGreetingFile(path string) error {
 				greet.Greeting = text
 			}
 		}
+		greet.IsLucky = false
 		err := db.Create(&greet).Error
 		if err != nil {
 			return err

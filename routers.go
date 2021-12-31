@@ -47,7 +47,7 @@ func init() {
 		//添加一条祝福语
 		v1.POST("/greeting/add", api.ApiAddGreeting)
 		//抽祝福语 greetings
-		//v1.GET("/greetings/random")
+		v1.GET("/greetings/random", api.ApiRandomGreeting)
 	}
 }
 

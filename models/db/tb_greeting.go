@@ -23,12 +23,24 @@ func GetAllGreeting() (list []TBGreeting) {
 	return list
 }
 
+// GetNotLuckyGreeting 获取未中奖的祝福语列表
+func GetNotLuckyGreeting() (greetings []TBGreeting) {
+	db.Where("is_lucky = ?", false).Find(&greetings)
+	return greetings
+}
+
+// GreetingHasLucky 标记祝福语中奖
+func GreetingHasLucky(id int, is bool) {
+	db.Model(&TBGreeting{}).Where("id = ?", id).Update(&TBGreeting{IsLucky: is})
+}
+
 // AddGreeting 添加一条祝福语
 func AddGreeting(name, number, greeting string) error {
 	g := &TBGreeting{
 		Name:     name,
 		Number:   number,
 		Greeting: greeting,
+		IsLucky:  false,
 	}
 	err := db.Create(&g).Error
 	return err
