@@ -8,16 +8,21 @@ import (
 	"math/big"
 	"net/http"
 	"strconv"
+	"sync"
 )
+
+var lMu sync.Mutex
 
 // ApiGetRandom 随机抽奖，根据每个奖项的可中奖数量，返回中奖人员
 func ApiGetRandom(c *gin.Context) {
+	lMu.Lock()
 	id, err := strconv.Atoi(c.Query("id")) // 奖项id
 	if err != nil || id < 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "id参数错误",
 			"Error":  err.Error()})
+		lMu.Unlock()
 		return
 	}
 	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
@@ -26,6 +31,7 @@ func ApiGetRandom(c *gin.Context) {
 			"Status": false,
 			"Msg":    "count参数错误",
 			"Error":  err.Error()})
+		lMu.Unlock()
 		return
 	}
 	prize := db.GetPrizeByID(id)
@@ -33,6 +39,7 @@ func ApiGetRandom(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "该奖项已抽奖完毕"})
+		lMu.Unlock()
 		return
 	}
 	type result struct {
@@ -49,6 +56,7 @@ func ApiGetRandom(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "请检查有无未抽奖的用户"})
+		lMu.Unlock()
 		return
 	}
 	// 抽奖过程
@@ -90,4 +98,5 @@ func ApiGetRandom(c *gin.Context) {
 		"Results":        results,
 		"PrizeRemaining": prize.Sum - prize.AlreadyUsed,
 	})
+	lMu.Unlock()
 }

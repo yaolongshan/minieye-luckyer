@@ -7,6 +7,7 @@ import (
 	"math/big"
 	"net/http"
 	"strconv"
+	"sync"
 )
 
 // ApiGreetingList 祝福语列表
@@ -43,14 +44,18 @@ func ApiAddGreeting(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Msg": "添加成功"})
 }
 
+var GMu sync.Mutex
+
 // ApiRandomGreeting 随机抽祝福语
 func ApiRandomGreeting(c *gin.Context) {
+	GMu.Lock()
 	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
 	if err != nil || count <= 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "count参数错误",
 			"Error":  err.Error()})
+		GMu.Unlock()
 		return
 	}
 	type result struct {
@@ -65,6 +70,7 @@ func ApiRandomGreeting(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "请检查有无未抽奖的祝福语"})
+		GMu.Unlock()
 		return
 	}
 	for i := 0; i < count; i++ {
@@ -91,4 +97,5 @@ func ApiRandomGreeting(c *gin.Context) {
 		"Participants":   participants,
 		"Results":        results,
 	})
+	GMu.Unlock()
 }
