@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 // TBLucky 中奖名单
@@ -44,7 +44,7 @@ func GetLuckyList() (ls []TBLucky) {
 }
 
 // LuckyCount 中奖列表数量
-func LuckyCount() (count int) {
+func LuckyCount() (count int64) {
 	db.Model(&TBLucky{}).Count(&count)
 	return count
 }

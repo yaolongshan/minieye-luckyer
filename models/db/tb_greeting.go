@@ -1,6 +1,6 @@
 package db
 
-import "github.com/jinzhu/gorm"
+import "gorm.io/gorm"
 
 // TBGreeting 祝福语，跟其他表没有关联，是单独的一个抽奖
 type TBGreeting struct {
@@ -12,7 +12,7 @@ type TBGreeting struct {
 }
 
 // GreetingCount 祝福语数量
-func GreetingCount() (count int) {
+func GreetingCount() (count int64) {
 	db.Model(&TBGreeting{}).Count(&count)
 	return count
 }
@@ -31,7 +31,7 @@ func GetNotLuckyGreeting() (greetings []TBGreeting) {
 
 // GreetingHasLucky 标记祝福语中奖
 func GreetingHasLucky(id int, is bool) {
-	db.Model(&TBGreeting{}).Where("id = ?", id).Update(&TBGreeting{IsLucky: is})
+	db.Model(&TBGreeting{}).Where("id = ?", id).Update("is_lucky", is)
 }
 
 // AddGreeting 添加一条祝福语

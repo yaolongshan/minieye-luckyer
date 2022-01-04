@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type TBUser struct {
@@ -16,7 +16,7 @@ type TBUser struct {
 }
 
 // UserCount 员工数量
-func UserCount() (count int) {
+func UserCount() (count int64) {
 	db.Model(&TBUser{}).Count(&count)
 	return count
 }
@@ -34,7 +34,7 @@ func GetNotLuckyUserList() (users []TBUser) {
 }
 
 // GetNotLuckyUserListCount 获取未中奖的员工数量
-func GetNotLuckyUserListCount() (count int) {
+func GetNotLuckyUserListCount() (count int64) {
 	db.Model(&TBUser{}).Where("is_lucky = ?", false).Count(&count)
 	return count
 }
@@ -46,7 +46,7 @@ func GetNotLuckyFullTimeUserList() (users []TBUser) {
 }
 
 // GetNotLuckyFullTimeUserCount 获取未中奖的全职员工数量
-func GetNotLuckyFullTimeUserCount() (count int) {
+func GetNotLuckyFullTimeUserCount() (count int64) {
 	db.Model(&TBUser{}).Where("is_lucky = ?", false).Where("type LIKE ?", "%全职%").Count(&count)
 	return count
 }
@@ -67,7 +67,7 @@ func AddUser(name, phone, type_, number, contract, mail string) {
 
 // UserHasLucky 标记员工中过奖
 func UserHasLucky(id int, is bool) {
-	db.Model(&TBUser{}).Where("id = ?", id).Update(&TBUser{IsLucky: is})
+	db.Model(&TBUser{}).Where("id = ?", id).Update("is_lucky", is)
 }
 
 func (TBUser) TableName() string {

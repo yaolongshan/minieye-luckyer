@@ -2,7 +2,7 @@ package db
 
 import (
 	"errors"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 // TBPrize 奖项设置表
@@ -22,7 +22,7 @@ func GetPrizeList() (prizes []TBPrize) {
 }
 
 // PrizeCount 数量
-func PrizeCount() (count int) {
+func PrizeCount() (count int64) {
 	db.Model(&TBPrize{}).Count(&count)
 	return count
 }

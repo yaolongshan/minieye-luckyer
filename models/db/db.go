@@ -2,34 +2,34 @@ package db
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/tealeg/xlsx"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 var db *gorm.DB
 
 func InitDB() {
 	var err error
-	db, err = gorm.Open("sqlite3", "./data.db")
+	db, err = gorm.Open(sqlite.Open("./data.db"), &gorm.Config{})
 	if err != nil {
 		panic(fmt.Sprintf("failed to connect database,error: %v", err))
 	}
-	db.AutoMigrate(&TBUser{})
-	db.AutoMigrate(&TBPrize{})
-	db.AutoMigrate(&TBLucky{})
-	db.AutoMigrate(&TBGreeting{})
+	_ = db.AutoMigrate(&TBUser{})
+	_ = db.AutoMigrate(&TBPrize{})
+	_ = db.AutoMigrate(&TBLucky{})
+	_ = db.AutoMigrate(&TBGreeting{})
 }
 
 // InitTables 测试用，初始化表，删除数据
 func InitTables() error {
-	db.Model(&TBUser{}).Update("is_lucky", false)
+	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Model(&TBUser{}).Update("is_lucky", false)
 
-	db.Model(&TBGreeting{}).Update("is_lucky", false)
+	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Model(&TBGreeting{}).Update("is_lucky", false)
 
-	db.Model(&TBPrize{}).Update("already_used", 0)
+	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Model(&TBPrize{}).Update("already_used", 0)
 
-	err := db.Unscoped().Delete(&TBLucky{}).Error
+	err := db.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&TBLucky{}).Error
 	if err != nil {
 		return err
 	}
@@ -42,6 +42,7 @@ func ReadUserFile(path string) error {
 		fmt.Println("open failed:", err)
 		return err
 	}
+	var users []TBUser
 	for i, row := range file.Sheets[0].Rows {
 		if i == 0 {
 			continue
@@ -71,12 +72,13 @@ func ReadUserFile(path string) error {
 			}
 		}
 		user.IsLucky = false
-		err := db.Create(&user).Error
-		if err != nil {
-			return err
-		}
-		fmt.Println(fmt.Sprintf("成功添加用户: %v ", user.Name))
+		users = append(users, user)
 	}
+	err = db.Create(&users).Error
+	if err != nil {
+		return err
+	}
+	fmt.Println(fmt.Sprintf("成功添加%v位用户", len(users)))
 	return nil
 }
 
@@ -86,6 +88,7 @@ func ReadGreetingFile(path string) error {
 		fmt.Println("open failed:", err)
 		return err
 	}
+	var greets []TBGreeting
 	for i, row := range file.Sheets[0].Rows {
 		if i == 0 {
 			continue
@@ -106,11 +109,12 @@ func ReadGreetingFile(path string) error {
 			}
 		}
 		greet.IsLucky = false
-		err := db.Create(&greet).Error
-		if err != nil {
-			return err
-		}
-		fmt.Println(fmt.Sprintf("成功添加%v的祝福语", greet.Name))
+		greets = append(greets, greet)
 	}
+	err = db.Create(&greets).Error
+	if err != nil {
+		return err
+	}
+	fmt.Println(fmt.Sprintf("成功添加%v条祝福语", len(greets)))
 	return nil
 }
