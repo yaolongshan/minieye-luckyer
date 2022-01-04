@@ -1,4 +1,4 @@
-package main
+package router
 
 import (
 	api "code/minieye-luckyer/controllers"
@@ -7,10 +7,8 @@ import (
 	"time"
 )
 
-var app *gin.Engine
-
-func init() {
-	app = gin.Default()
+func SetupRouter() *gin.Engine {
+	app := gin.Default()
 	//app.Use(MiddleWare())
 	v1 := app.Group("/api")
 	{
@@ -33,7 +31,7 @@ func init() {
 		//未中奖(阳光普照奖)名单列表
 		v1.GET("/lucky/notlist", api.ApiGetNotLucky)
 		//下载未中奖(阳光普照奖)名单表格文件
-		v1.GET("/lucky/notfile",api.ApiGetNotLuckyFile)
+		v1.GET("/lucky/notfile", api.ApiGetNotLuckyFile)
 		//抽奖接口
 		v1.GET("/lucky/random", api.ApiGetRandom)
 		//图片预览
@@ -49,6 +47,7 @@ func init() {
 		//抽祝福语 greetings
 		v1.GET("/greetings/random", api.ApiRandomGreeting)
 	}
+	return app
 }
 
 func MiddleWare() gin.HandlerFunc {
