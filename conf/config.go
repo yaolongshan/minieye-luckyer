@@ -44,3 +44,21 @@ func LoadLocalConf() {
 		panic("请检查本地配置信息, RootPath 是必填字段")
 	}
 }
+
+// LoadLocalConfTest 单元测试用例
+func LoadLocalConfTest() {
+	file, err := os.Open("../local_conf.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&Conf)
+	if err != nil {
+		fmt.Println("local_conf.json decoder failed", err.Error())
+		panic(err)
+	}
+	if Conf.RootPath == "" {
+		panic("请检查本地配置信息, RootPath 是必填字段")
+	}
+}

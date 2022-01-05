@@ -21,6 +21,19 @@ func InitDB() {
 	_ = db.AutoMigrate(&TBGreeting{})
 }
 
+// InitDBTest 单元测试用例
+func InitDBTest() {
+	var err error
+	db, err = gorm.Open(sqlite.Open("../data.db"), &gorm.Config{})
+	if err != nil {
+		panic(fmt.Sprintf("failed to connect database,error: %v", err))
+	}
+	_ = db.AutoMigrate(&TBUser{})
+	_ = db.AutoMigrate(&TBPrize{})
+	_ = db.AutoMigrate(&TBLucky{})
+	_ = db.AutoMigrate(&TBGreeting{})
+}
+
 // InitTables 测试用，初始化表，删除数据
 func InitTables() error {
 	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Model(&TBUser{}).Update("is_lucky", false)
