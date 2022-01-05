@@ -30,6 +30,11 @@ func AddLucky(userID int, name, number, phone, mail, prizeLevel, content string)
 	db.Create(&l)
 }
 
+// AddLucks 添加多个中奖记录
+func AddLucks(lucks []TBLucky){
+	db.Create(&lucks)
+}
+
 // QueryLucky 查询某人是否中奖
 func QueryLucky(userID int) bool {
 	var l TBLucky

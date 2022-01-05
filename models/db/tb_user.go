@@ -70,6 +70,11 @@ func UserHasLucky(id int, is bool) {
 	db.Model(&TBUser{}).Where("id = ?", id).Update("is_lucky", is)
 }
 
+// UsersHasLucky 标记多个员工中奖
+func UsersHasLucky(ids []int, is bool){
+	db.Model(&TBUser{}).Where("id IN ?", ids).Update("is_lucky", is)
+}
+
 func (TBUser) TableName() string {
 	return "tb_user"
 }

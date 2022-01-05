@@ -89,6 +89,12 @@ func PrizeIncrease(id int) {
 	db.Model(&TBPrize{}).Where("id = ?", id).Update("already_used", prize.AlreadyUsed+1)
 }
 
+// PrizeIncreaseBy 根据数量对奖项已抽数量减少
+func PrizeIncreaseBy(id, count int) {
+	prize := GetPrizeByID(id)
+	db.Model(&TBPrize{}).Where("id = ?", id).Update("already_used", prize.AlreadyUsed+count)
+}
+
 func (TBPrize) TableName() string {
 	return "tb_prize"
 }

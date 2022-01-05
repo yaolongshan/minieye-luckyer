@@ -100,3 +100,111 @@ func ApiGetRandom(c *gin.Context) {
 	})
 	lMu.Unlock()
 }
+
+// ApiGetRandomV2 优化后的抽奖
+func ApiGetRandomV2(c *gin.Context) {
+	lMu.Lock()
+	id, err := strconv.Atoi(c.Query("id")) // 奖项id
+	if err != nil || id < 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "id参数错误",
+			"Error":  err.Error()})
+		lMu.Unlock()
+		return
+	}
+	count, err := strconv.Atoi(c.Query("count")) // 抽奖数量
+	if err != nil || count <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "count参数错误",
+			"Error":  err.Error()})
+		lMu.Unlock()
+		return
+	}
+	prize := db.GetPrizeByID(id)
+	if prize.AlreadyUsed >= prize.Sum {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "该奖项已抽奖完毕"})
+		lMu.Unlock()
+		return
+	}
+	type result struct {
+		Name   string
+		Phone  string
+		Number string
+		Mail   string
+	}
+	var results []result
+	// 参与抽奖的人数，这里要包括实习生的人数
+	var participants = db.GetNotLuckyUserListCount()
+	// 全职员工抽奖人数校验
+	if db.GetNotLuckyFullTimeUserCount() == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "请检查有无未抽奖的用户"})
+		lMu.Unlock()
+		return
+	}
+	var lucks []db.TBLucky
+	alreadyUsed := 0
+	var ids []int
+	//拿到没中奖的非实习生小伙伴
+	users := db.GetNotLuckyFullTimeUserList()
+	// 抽奖过程
+	for i := 0; i < count; i++ {
+		// 剩余奖项数量
+		if prize.AlreadyUsed >= prize.Sum {
+			fmt.Println("抽完咯")
+			break
+		}
+		lenUser := len(users)
+		if lenUser == 0 {
+			break
+		}
+		fmt.Println(fmt.Sprintf("第%v轮共有%v人参与抽奖", i+1, lenUser))
+		index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
+		user := users[index.Int64()]
+		//从数组中移除这位用户
+		users = append(users[:index.Int64()], users[index.Int64()+1:]...)
+		r := result{
+			Name:   user.Name,
+			Phone:  user.Phone,
+			Number: user.Number,
+			Mail:   user.Mail,
+		}
+		results = append(results, r)
+		//保存中奖记录
+		l := db.TBLucky{
+			UserID:     int(user.ID),
+			Name:       user.Name,
+			Number:     user.Number,
+			Phone:      user.Phone,
+			Mail:       user.Mail,
+			PrizeLevel: prize.Level,
+			Content:    prize.Name,
+		}
+		lucks = append(lucks, l)
+		//保存中奖的用户
+		ids = append(ids, int(user.ID))
+		//奖项已抽数量递增
+		alreadyUsed++
+		prize.AlreadyUsed++
+	}
+	//保存中奖记录
+	db.AddLucks(lucks)
+	//改变奖项已抽数量
+	db.PrizeIncreaseBy(int(prize.ID), alreadyUsed)
+	//标记一下用户表中的已中奖字段
+	db.UsersHasLucky(ids, true)
+	//prize = db.GetPrizeByID(id)
+	c.JSON(http.StatusOK, gin.H{
+		"Status":         true,
+		"Count":          len(results),
+		"Participants":   participants,
+		"Results":        results,
+		"PrizeRemaining": prize.Sum - prize.AlreadyUsed,
+	})
+	lMu.Unlock()
+}
