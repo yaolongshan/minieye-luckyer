@@ -76,6 +76,13 @@ func ApiUpdatePrizeSum(c *gin.Context) {
 	}
 	err := db.UpdatePrizeSum(r.ID, r.Sum)
 	if err != nil {
+		if err.Error() == "设置的数量不能低于已抽数量" {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"Status": false,
+				"Msg":    "设置的数量不能低于已抽数量",
+				"Error":  "error"})
+			return
+		}
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
 			"Msg":    "修改失败",
