@@ -24,7 +24,7 @@
   ```json
   {
     "Port": 8080, // 端口
-    "RootPath": "/Users/yaolongshan/go/src/code/minieye-luckyer", // 项目根目录
+    "RootPath": "/Users/yaolongshan/go/src/code/minieye-luckyer", // 项目根目录，最后面不需要带/
     "SMS": { // 阿里云短信相关配置
       "AccessKeyId": "XXXXXXXX",
       "AccessKeySecret": "XXXXXXXXXXX",
