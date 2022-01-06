@@ -306,7 +306,7 @@ HTTP: `POST`
 }
 ```
 
-##### ✈️ 获取祝福语列表
+##### ✈️ 获取所有祝福语
 
 路径: `/api/greeting/list`
 
@@ -326,7 +326,8 @@ HTTP: `GET`
       "DeletedAt": null,
       "Name": "张三",
       "Number": "00999",
-      "Greeting": "祝福语内容xxxxxxxx"
+      "Greeting": "祝福语内容xxxxxxxx",
+      "IsLucky": false
     }
   ]
 }
@@ -376,6 +377,33 @@ http://192.168.17.115:8080/api/greetings/random?count=10
       "Name": "张三",
       "Number": "00999",
       "Greeting": "这是一条祝福语"
+    }
+  ]
+}
+```
+
+##### 🚤 获取中奖的祝福语
+
+路径:  `/api/greeting/luckylist`
+
+HTTP:  `GET`
+
+返回示例:
+
+```json
+{
+  "Status": true,
+  "Count": 20,
+  "Greetings": [
+    {
+      "ID": 1,
+      "CreatedAt": "2021-12-21T17:22:27.732045+08:00",
+      "UpdatedAt": "2021-12-21T17:22:27.732045+08:00",
+      "DeletedAt": null,
+      "Name": "张三",
+      "Number": "00999",
+      "Greeting": "祝福语内容xxxxxxxx",
+      "IsLucky": true
     }
   ]
 }
