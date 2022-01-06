@@ -25,6 +25,7 @@ func RandName() string {
 	return s
 }
 
+// CreateLuckyXLSXFile 中奖名单文件
 func CreateLuckyXLSXFile() {
 	list := db.GetLuckyList()
 	savePath := fmt.Sprintf("%v/files/info.xlsx", conf.Conf.RootPath)
@@ -70,6 +71,7 @@ func CreateLuckyXLSXFile() {
 	}
 }
 
+// CreateNotLuckyXLSXFile 未中奖名单文件
 func CreateNotLuckyXLSXFile() {
 	users := db.GetNotLuckyUserList()
 	usersLen := len(users)
@@ -130,6 +132,39 @@ func CreateNotLuckyXLSXFile() {
 	}
 }
 
+// CreateLuckyGreetingXLSXFile 祝福语中奖名单文件
+func CreateLuckyGreetingXLSXFile(){
+	greetings := db.GetLuckyGreeting()
+	savePath := fmt.Sprintf("%v/files/greeting.xlsx", conf.Conf.RootPath)
+	file := xlsx.NewFile()
+	sheet, _ := file.AddSheet("Sheet1")
+	{
+		row := sheet.AddRow()
+		row.SetHeightCM(0.8) //设置每行的高度
+		cell := row.AddCell()
+		cell.Value = "姓名"
+		cell = row.AddCell()
+		cell.Value = "工号"
+		cell = row.AddCell()
+		cell.Value = "祝福语"
+	}
+	for _, g := range greetings {
+		row := sheet.AddRow()
+		row.SetHeightCM(0.8)
+		cell := row.AddCell()
+		cell.Value = g.Name
+		cell = row.AddCell()
+		cell.Value = g.Number
+		cell = row.AddCell()
+		cell.Value = g.Greeting
+	}
+	err := file.Save(savePath)
+	if err != nil {
+		panic(err)
+	}
+}
+
+// Base64SaveImage 图片保存
 func Base64SaveImage(base64Content string) (bool, string) {
 	// base64内容校验
 	b, err := regexp.MatchString(`^data:\s*image\/(\w+);base64,`, base64Content)

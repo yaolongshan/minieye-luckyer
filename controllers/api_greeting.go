@@ -1,11 +1,14 @@
 package controllers
 
 import (
+	"code/minieye-luckyer/comm"
+	"code/minieye-luckyer/conf"
 	"code/minieye-luckyer/models/db"
 	"crypto/rand"
 	"github.com/gin-gonic/gin"
 	"math/big"
 	"net/http"
+	"path"
 	"strconv"
 	"sync"
 )
@@ -49,6 +52,17 @@ func ApiAddGreeting(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Msg": "添加成功"})
+}
+
+// ApiLuckyGreetingFile 下载中奖祝福语表格文件
+func ApiLuckyGreetingFile(c *gin.Context){
+	comm.CreateLuckyGreetingXLSXFile()
+	filePath := conf.Conf.RootPath + "/files/greeting.xlsx"
+	fileName := path.Base(filePath)
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename="+fileName)
+	c.Header("Content-Transfer-Encoding", "binary")
+	c.File(filePath)
 }
 
 var GMu sync.Mutex

@@ -23,8 +23,6 @@ func ApiGetAllLucky(c *gin.Context) {
 func ApiGetLuckyFile(c *gin.Context) {
 	comm.CreateLuckyXLSXFile()
 	filePath := conf.Conf.RootPath + "/files/info.xlsx"
-	//fileTmp, _ := os.Open(filePath)
-	//defer fileTmp.Close()
 	fileName := path.Base(filePath)
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+fileName)
