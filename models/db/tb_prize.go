@@ -28,8 +28,8 @@ func PrizeCount() (count int64) {
 	return count
 }
 
-// UpdatePrize 修改奖项的总数量
-func UpdatePrize(id, sum int) error {
+// UpdatePrizeSum 修改奖项的总数量
+func UpdatePrizeSum(id, sum int) error {
 	prize := GetPrizeByID(id)
 	// 添加的情况
 	if sum >= prize.Sum {
@@ -47,13 +47,20 @@ func UpdatePrize(id, sum int) error {
 	}
 }
 
+// UpdatePrizeDrawNumber 修改奖项的每次抽奖的数量
+func UpdatePrizeDrawNumber(id, drawNumber int) error {
+	err := db.Model(&TBPrize{}).Where("id = ?", id).Update("draw_number", drawNumber).Error
+	return err
+}
+
 // AddPrize 添加一个奖项
-func AddPrize(level, name, url string, sum int) error {
+func AddPrize(level, name, url string, sum, drawNumber int) error {
 	p := &TBPrize{
 		Level:       level,
 		Name:        name,
 		Sum:         sum,
 		AlreadyUsed: 0,
+		DrawNumber:  drawNumber,
 		ImageUrl:    url,
 	}
 	err := db.Create(&p).Error

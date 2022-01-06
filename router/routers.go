@@ -21,7 +21,9 @@ func SetupRouter() *gin.Engine {
 		//奖项列表
 		v1.GET("/prize/list", api.ApiGetAllPrize)
 		//设置奖项数量
-		v1.POST("/prize/update", api.ApiUpdatePrize)
+		v1.POST("/prize/update", api.ApiUpdatePrizeSum)
+		//修改奖项每次抽奖的数量
+		v1.POST("/prize/change", api.ApiUpdatePrizeDrawNumber)
 		//删除一个奖项
 		v1.DELETE("/prize/delete", api.ApiDelPrize)
 		//中奖名单列表

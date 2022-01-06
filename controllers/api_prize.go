@@ -12,6 +12,7 @@ type prize struct {
 	Level       string `json:"level"`
 	Name        string `json:"name"`
 	Sum         int    `json:"sum"`
+	DrawNumber  int    `json:"draw_number"`
 	ImageBase64 string `json:"image_base64"`
 }
 
@@ -34,7 +35,7 @@ func ApiAddPrize(c *gin.Context) {
 			"Error":  urlOrMsg})
 		return
 	}
-	err = db.AddPrize(p.Level, p.Name, urlOrMsg, p.Sum)
+	err = db.AddPrize(p.Level, p.Name, urlOrMsg, p.Sum, p.DrawNumber)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
@@ -59,11 +60,11 @@ func ApiGetAllPrize(c *gin.Context) {
 		"Prizes": prizes})
 }
 
-// ApiUpdatePrize 修改奖项的数量
-func ApiUpdatePrize(c *gin.Context) {
+// ApiUpdatePrizeSum 修改奖项的数量
+func ApiUpdatePrizeSum(c *gin.Context) {
 	type req struct {
 		ID  int `json:"id"`
-		Sum int    `json:"sum"`
+		Sum int `json:"sum"`
 	}
 	var r req
 	if err := c.ShouldBindJSON(&r); err != nil {
@@ -73,7 +74,40 @@ func ApiUpdatePrize(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	err := db.UpdatePrize(r.ID, r.Sum)
+	err := db.UpdatePrizeSum(r.ID, r.Sum)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "修改失败",
+			"Error":  err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"Status": true,
+		"Msg":    "ok"})
+}
+
+// ApiUpdatePrizeDrawNumber 修改奖项每次抽奖的数量
+func ApiUpdatePrizeDrawNumber(c *gin.Context) {
+	type req struct {
+		ID     int `json:"id"`
+		Number int `json:"number"`
+	}
+	var r req
+	if err := c.ShouldBindJSON(&r); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "json参数错误",
+			"Error":  err.Error()})
+		return
+	}
+	if r.Number <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Status": false,
+			"Msg":    "number参数错误"})
+		return
+	}
+	err := db.UpdatePrizeDrawNumber(r.ID, r.Number)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,

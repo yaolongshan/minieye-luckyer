@@ -156,6 +156,23 @@ HTTP: `POST`
 }
 ```
 
+##### ⛱ 修改一个奖项每次抽奖的数量
+
+路径: `/api/prize/change`
+
+HTTP: `POST`
+
+参数类型: `json`
+
+请求示例:
+
+```json
+{
+  "id":1, //要修改奖项的id
+  "number":10 //修改为每次抽奖抽取多少个
+}
+```
+
 ##### 🚐 删除一个奖项
 
 路径: `/api/prize/delete`
