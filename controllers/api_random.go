@@ -13,6 +13,13 @@ import (
 
 var lMu sync.Mutex
 
+type result struct {
+	Name   string
+	Phone  string
+	Number string
+	Mail   string
+}
+
 // ApiGetRandom 随机抽奖，根据每个奖项的可中奖数量，返回中奖人员
 func ApiGetRandom(c *gin.Context) {
 	lMu.Lock()
@@ -41,12 +48,6 @@ func ApiGetRandom(c *gin.Context) {
 			"Msg":    "该奖项已抽奖完毕"})
 		lMu.Unlock()
 		return
-	}
-	type result struct {
-		Name   string
-		Phone  string
-		Number string
-		Mail   string
 	}
 	var results []result
 	// 参与抽奖的人数，这里要包括实习生的人数
@@ -130,12 +131,6 @@ func ApiGetRandomV2(c *gin.Context) {
 		lMu.Unlock()
 		return
 	}
-	type result struct {
-		Name   string
-		Phone  string
-		Number string
-		Mail   string
-	}
 	var results []result
 	// 参与抽奖的人数，这里要包括实习生的人数
 	var participants = db.GetNotLuckyUserListCount()
@@ -198,7 +193,6 @@ func ApiGetRandomV2(c *gin.Context) {
 	db.PrizeIncreaseBy(int(prize.ID), alreadyUsed)
 	//标记一下用户表中的已中奖字段
 	db.UsersHasLucky(ids, true)
-	//prize = db.GetPrizeByID(id)
 	c.JSON(http.StatusOK, gin.H{
 		"Status":         true,
 		"Count":          len(results),

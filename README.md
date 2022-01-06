@@ -19,7 +19,7 @@
 
   `go mod download`
   
-- 修改本地配置文件`local_conf.json`
+- 在项目根目录下编辑本地配置文件`local_conf.json`
 
   ```json
   {
