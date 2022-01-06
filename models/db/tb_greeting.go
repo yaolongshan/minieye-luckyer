@@ -29,6 +29,12 @@ func GetNotLuckyGreeting() (greetings []TBGreeting) {
 	return greetings
 }
 
+// GetNotLuckyGreetingCount 获取未中奖的祝福语数量
+func GetNotLuckyGreetingCount() (count int64) {
+	db.Model(&TBGreeting{}).Where("is_lucky = ?", false).Count(&count)
+	return count
+}
+
 // GreetingHasLucky 标记祝福语中奖
 func GreetingHasLucky(id int, is bool) {
 	db.Model(&TBGreeting{}).Where("id = ?", id).Update("is_lucky", is)

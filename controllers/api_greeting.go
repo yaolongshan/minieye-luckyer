@@ -65,7 +65,7 @@ func ApiRandomGreeting(c *gin.Context) {
 	}
 	var results []result
 	// 本次抽祝福语的数量
-	participants := len(db.GetNotLuckyGreeting())
+	participants := db.GetNotLuckyGreetingCount()
 	if participants == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
