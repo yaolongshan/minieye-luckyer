@@ -88,6 +88,7 @@ HTTP: `POST`
     "level": "一等奖", //奖项等级不可重复
     "name": "神秘大礼包", //奖品名称
     "sum": 10,//奖项数量
+    "draw_number": 2, //设置这个奖项每次抽奖的数量
     "image_base64": "xxxxxxxx" //图片base64数据
   }
   ```
@@ -106,7 +107,9 @@ HTTP: `POST`
     "Level": "一等奖", // 奖项级别
     "Name": "神秘大礼包", // 奖品名称
     "Sum": 10,    // 奖项数量
-    "ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
+    "AlreadyUsed": 0, // 已抽数量
+    "DrawNumber": 2, // 每次抽奖的数量
+    "ImageUrl": "/api/images/isdwkkskw.jpg" //图片url
   }
 }
 ```
@@ -133,7 +136,8 @@ HTTP: `GET`
       "Name": "神秘大礼包", // 奖品名称
       "Sum": 10,   // 奖项数量
       "AlreadyUsed": 10, // 已抽数量
-      "ImageUrl": "http://xxxxxxx/api/images/isdwkkskw.jpg" //图片url
+      "DrawNumber": 2, // 每次抽奖的数量
+      "ImageUrl": "/api/images/isdwkkskw.jpg" //图片url
     }
   ]
 }
