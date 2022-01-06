@@ -352,7 +352,7 @@ HTTP: `POST`
 
 ##### 🚀 祝福语抽奖接口
 
-路径:  `/api/greetings/random`
+路径:  `/api/greeting/random`
 
 HTTP:  `GET`
 

@@ -23,6 +23,12 @@ func GetAllGreeting() (list []TBGreeting) {
 	return list
 }
 
+// GetLuckyGreeting 获取中奖的祝福语列表
+func GetLuckyGreeting() (greetings []TBGreeting) {
+	db.Where("is_lucky = ?", true).Find(&greetings)
+	return greetings
+}
+
 // GetNotLuckyGreeting 获取未中奖的祝福语列表
 func GetNotLuckyGreeting() (greetings []TBGreeting) {
 	db.Where("is_lucky = ?", false).Find(&greetings)

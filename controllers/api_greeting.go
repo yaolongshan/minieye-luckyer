@@ -17,6 +17,13 @@ func ApiGreetingList(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Count": count, "Greetings": list})
 }
 
+// ApiGreetingLuckyList 中奖的祝福语列表
+func ApiGreetingLuckyList(c *gin.Context){
+	list := db.GetLuckyGreeting()
+	count := len(list)
+	c.JSON(http.StatusOK, gin.H{"Status": true, "Count": count, "Greetings": list})
+}
+
 // ApiAddGreeting 添加
 func ApiAddGreeting(c *gin.Context) {
 	type req struct {
