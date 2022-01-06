@@ -35,7 +35,7 @@ func SetupRouter() *gin.Engine {
 		//下载未中奖(阳光普照奖)名单表格文件
 		v1.GET("/lucky/notfile", api.ApiGetNotLuckyFile)
 		//抽奖接口
-		v1.GET("/lucky/random", api.ApiGetRandomV2)
+		v1.GET("/lucky/random", api.ApiGetRandomV3)
 		//图片预览
 		v1.GET("/images/:name", api.ApiImagesPreview)
 		//短信接口

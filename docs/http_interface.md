@@ -271,12 +271,10 @@ HTTP: `GET`
 
 参数: `id`  奖项的id
 
-参数: `count` 抽奖数量
-
 请求示例:
 
 ```http
-http://localhost:8080/api/lucky/random?id=1&count=10
+http://localhost:8080/api/lucky/random?id=1
 ```
 
 返回示例:
