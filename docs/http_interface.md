@@ -409,3 +409,8 @@ HTTP:  `GET`
 }
 ```
 
+##### 🛰 下载中奖的祝福语表格文件
+
+路径:  `/api/greeting/file`
+
+HTTP:  `GET`
