@@ -10,8 +10,9 @@ type TBPrize struct {
 	gorm.Model
 	Level       string `gorm:"unique;not null"` // 奖项级别
 	Name        string // 奖品名称
-	Sum         int    // 奖项数量
+	Sum         int    // 奖项总数量
 	AlreadyUsed int    // 已抽数量
+	DrawNumber  int    // 抽奖数量，每次抽奖根据这个值去抽取多少个中奖
 	ImageUrl    string
 }
 
