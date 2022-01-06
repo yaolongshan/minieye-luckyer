@@ -7,10 +7,10 @@ import (
 )
 
 type config struct {
-	Port       int    `json:"Port"`       // 监听端口
-	RootPath   string `json:"RootPath"`   // 项目根目录
-	SMS        sms    `json:"SMS"`        // 短信配置
-	DingDing   ding   `json:"DingDing"`   // 钉钉消息配置
+	Port     int    `json:"Port"`     // 监听端口
+	RootPath string `json:"RootPath"` // 项目根目录
+	SMS      sms    `json:"SMS"`      // 短信配置
+	DingDing ding   `json:"DingDing"` // 钉钉消息配置
 }
 
 type sms struct {

@@ -133,7 +133,7 @@ func CreateNotLuckyXLSXFile() {
 }
 
 // CreateLuckyGreetingXLSXFile 祝福语中奖名单文件
-func CreateLuckyGreetingXLSXFile(){
+func CreateLuckyGreetingXLSXFile() {
 	greetings := db.GetLuckyGreeting()
 	savePath := fmt.Sprintf("%v/files/greeting.xlsx", conf.Conf.RootPath)
 	file := xlsx.NewFile()

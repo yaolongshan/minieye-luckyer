@@ -71,7 +71,7 @@ func UserHasLucky(id int, is bool) {
 }
 
 // UsersHasLucky 标记多个员工中奖
-func UsersHasLucky(ids []int, is bool){
+func UsersHasLucky(ids []int, is bool) {
 	db.Model(&TBUser{}).Where("id IN ?", ids).Update("is_lucky", is)
 }
 

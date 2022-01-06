@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestApiGetAllLucky(t *testing.T){
+func TestApiGetAllLucky(t *testing.T) {
 	//request, _ := http.NewRequest("GET", fmt.Sprintf("http://localhost:8080/api/lucky/list"), nil)
 	//response, err := client.Do(request)
 	//if err != nil {
@@ -23,7 +23,7 @@ func TestApiGetAllLucky(t *testing.T){
 	assert.Equal(t, 200, w.Code)
 }
 
-func TestApiGetLuckyFile(t *testing.T){
+func TestApiGetLuckyFile(t *testing.T) {
 	//request, _ := http.NewRequest("GET", fmt.Sprintf("http://localhost:8080/api/lucky/file"), nil)
 	//response, err := client.Do(request)
 	//if err != nil {

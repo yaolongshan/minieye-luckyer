@@ -31,7 +31,7 @@ func AddLucky(userID int, name, number, phone, mail, prizeLevel, content string)
 }
 
 // AddLucks 添加多个中奖记录
-func AddLucks(lucks []TBLucky){
+func AddLucks(lucks []TBLucky) {
 	db.Create(&lucks)
 }
 

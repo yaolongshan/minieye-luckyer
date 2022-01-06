@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func Init(){
+func Init() {
 	fmt.Println("init...")
 	conf.LoadLocalConfTest()
 	db.InitDBTest()

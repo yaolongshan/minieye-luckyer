@@ -21,7 +21,7 @@ func ApiGreetingList(c *gin.Context) {
 }
 
 // ApiGreetingLuckyList 中奖的祝福语列表
-func ApiGreetingLuckyList(c *gin.Context){
+func ApiGreetingLuckyList(c *gin.Context) {
 	list := db.GetLuckyGreeting()
 	count := len(list)
 	c.JSON(http.StatusOK, gin.H{"Status": true, "Count": count, "Greetings": list})
@@ -55,7 +55,7 @@ func ApiAddGreeting(c *gin.Context) {
 }
 
 // ApiLuckyGreetingFile 下载中奖祝福语表格文件
-func ApiLuckyGreetingFile(c *gin.Context){
+func ApiLuckyGreetingFile(c *gin.Context) {
 	comm.CreateLuckyGreetingXLSXFile()
 	filePath := conf.Conf.RootPath + "/files/greeting.xlsx"
 	fileName := path.Base(filePath)
@@ -113,10 +113,10 @@ func ApiRandomGreeting(c *gin.Context) {
 		db.GreetingHasLucky(int(greeting.ID), true)
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"Status":         true,
-		"Count":          len(results),
-		"Participants":   participants,
-		"Results":        results,
+		"Status":       true,
+		"Count":        len(results),
+		"Participants": participants,
+		"Results":      results,
 	})
 	GMu.Unlock()
 }
