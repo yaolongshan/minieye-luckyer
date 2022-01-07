@@ -52,7 +52,8 @@ func JWTAuth(c *gin.Context) {
 	if token == "" {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"Status": false,
-			"Msg":    "无权访问，请求未携带token"})
+			"Msg":    "无权访问，请登录后重试",
+			"Error":  "请携带token请求接口"})
 		c.Abort()
 		return
 	}
@@ -60,7 +61,7 @@ func JWTAuth(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"Status": false,
-			"Msg":    "无权访问，请检查token",
+			"Msg":    "无权访问，请登录后重试",
 			"Error":  err.Error()})
 		c.Abort()
 		return
