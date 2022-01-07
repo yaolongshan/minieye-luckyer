@@ -1,0 +1,14 @@
+{
+  "Port": 8080,
+  "RootPath": "/Users/yaolongshan/go/src/code/minieye-luckyer",
+  "SMS": {
+    "AccessKeyId": "",
+    "AccessKeySecret": "",
+    "SignName": "",
+    "TemplateCode": ""
+  },
+  "DingDing": {
+    "AppKey": "",
+    "AppSecret": ""
+  }
+}

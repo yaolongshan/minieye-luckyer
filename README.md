@@ -9,6 +9,9 @@
   
 - gorm
 
+- jwt-go
+
+
 #### 🔧 如何使用
 
 - 拉取项目
@@ -20,6 +23,8 @@
   `go mod download`
   
 - 在项目根目录下编辑本地配置文件`local_conf.json`
+
+- `cp local_conf.json.example local_conf.json`
 
   ```json
   {
