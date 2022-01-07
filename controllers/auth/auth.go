@@ -26,7 +26,7 @@ func Login(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	if r.UNM != UNM && r.PWD != PWD {
+	if r.UNM != UNM || r.PWD != PWD {
 		c.JSON(http.StatusForbidden, gin.H{
 			"Status": false,
 			"Msg":    "账号密码错误"})
@@ -65,4 +65,5 @@ func JWTAuth(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	c.Next()
 }
