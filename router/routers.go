@@ -2,16 +2,17 @@ package router
 
 import (
 	api "code/minieye-luckyer/controllers"
-	"fmt"
+	"code/minieye-luckyer/controllers/auth"
 	"github.com/gin-gonic/gin"
-	"time"
 )
 
 func SetupRouter() *gin.Engine {
 	app := gin.Default()
-	//app.Use(MiddleWare())
 	v1 := app.Group("/api")
+	v1.Use(auth.JWTAuth)
 	{
+		//登录
+		v1.POST("/login", auth.Login)
 		//员工列表
 		v1.GET("/user/list", api.ApiGetAllUser)
 		//添加员工
@@ -54,18 +55,4 @@ func SetupRouter() *gin.Engine {
 		v1.GET("/greeting/file", api.ApiLuckyGreetingFile)
 	}
 	return app
-}
-
-func MiddleWare() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		t := time.Now()
-		fmt.Println("中间件开始执行了")
-		// 设置变量到Context的key中，可以通过Get()取
-		c.Set("request", "中间件")
-		c.Next()
-		status := c.Writer.Status()
-		fmt.Println("中间件执行完毕", status)
-		t2 := time.Since(t)
-		fmt.Println("time:", t2)
-	}
 }
