@@ -37,9 +37,13 @@ func Login(c *gin.Context) {
 		Name:           UNM,
 		StandardClaims: jwt.StandardClaims{},
 	})
+	_, err := c.Cookie("m5hbWUiOiJhZG1pbiIs")
+	if err != nil {
+		c.SetCookie("m5hbWUiOiJhZG1pbiIs", token, 0, "/", "localhost", false, true)
+	}
 	c.JSON(http.StatusOK, gin.H{
-		"token": token,
-	})
+		"Status": true,
+		"Msg":    "登录成功"})
 }
 
 // JWTAuth 用户校验
@@ -48,16 +52,18 @@ func JWTAuth(c *gin.Context) {
 	if c.Request.RequestURI == "/api/login" {
 		return
 	}
-	token := c.GetHeader("token")
-	if token == "" {
+	token, err := c.Cookie("m5hbWUiOiJhZG1pbiIs")
+	// cookie中是否携带token
+	if err != nil || token == "" {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"Status": false,
 			"Msg":    "无权访问，请登录后重试",
-			"Error":  "请携带token请求接口"})
+			"Error":  err.Error()})
 		c.Abort()
 		return
 	}
-	_, err := parseToken(token)
+	// 携带的token进行校验
+	_, err = parseToken(token)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"Status": false,
