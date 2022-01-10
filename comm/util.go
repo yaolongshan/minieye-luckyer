@@ -146,6 +146,8 @@ func CreateLuckyGreetingXLSXFile() {
 		cell = row.AddCell()
 		cell.Value = "工号"
 		cell = row.AddCell()
+		cell.Value = "手机号"
+		cell = row.AddCell()
 		cell.Value = "祝福语"
 	}
 	for _, g := range greetings {
@@ -155,6 +157,8 @@ func CreateLuckyGreetingXLSXFile() {
 		cell.Value = g.Name
 		cell = row.AddCell()
 		cell.Value = g.Number
+		cell = row.AddCell()
+		cell.Value = g.Phone
 		cell = row.AddCell()
 		cell.Value = g.Greeting
 	}

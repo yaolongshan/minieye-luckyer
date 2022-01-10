@@ -7,6 +7,7 @@ type TBGreeting struct {
 	gorm.Model
 	Name     string `gorm:"unique"`
 	Number   string
+	Phone    string
 	Greeting string
 	IsLucky  bool // 是否中奖
 }
@@ -47,10 +48,11 @@ func GreetingHasLucky(id int, is bool) {
 }
 
 // AddGreeting 添加一条祝福语
-func AddGreeting(name, number, greeting string) error {
+func AddGreeting(name, number, phone, greeting string) error {
 	g := &TBGreeting{
 		Name:     name,
 		Number:   number,
+		Phone:    phone,
 		Greeting: greeting,
 		IsLucky:  false,
 	}

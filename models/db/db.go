@@ -117,6 +117,9 @@ func ReadGreetingFile(path string) error {
 				//fmt.Print("工号：", text, " ")
 				greet.Number = text
 			case 2:
+				//fmt.Print("手机号：", text, " ")
+				greet.Phone = text
+			case 3:
 				//fmt.Print("祝福语：", text, " ")
 				greet.Greeting = text
 			}

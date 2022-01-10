@@ -32,6 +32,7 @@ func ApiAddGreeting(c *gin.Context) {
 	type req struct {
 		Name     string `json:"name"`
 		Number   string `json:"number"`
+		Phone    string `json:"phone"`
 		Greeting string `json:"greeting"`
 	}
 	var r req
@@ -43,7 +44,7 @@ func ApiAddGreeting(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	err = db.AddGreeting(r.Name, r.Number, r.Greeting)
+	err = db.AddGreeting(r.Name, r.Number, r.Phone, r.Greeting)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,

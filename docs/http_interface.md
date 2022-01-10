@@ -366,6 +366,7 @@ HTTP: `GET`
       "DeletedAt": null,
       "Name": "张三",
       "Number": "00999",
+      "Phone": "18088888888",
       "Greeting": "祝福语内容xxxxxxxx",
       "IsLucky": false
     }
@@ -387,6 +388,7 @@ HTTP: `POST`
 {
   "name": "张三",
   "number": "00999",
+  "phone": "18088888888",
   "greeting": "祝福语内容xxxxx"
 }
 ```
