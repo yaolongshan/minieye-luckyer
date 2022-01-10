@@ -40,7 +40,6 @@ func Login(c *gin.Context) {
 	_, err := c.Cookie("m5hbWUiOiJhZG1pbiIs")
 	if err != nil {
 		c.SetCookie("m5hbWUiOiJhZG1pbiIs", token, 0, "/", "annual-2022.minieye.tech", false, true)
-		c.SetCookie("m5hbWUiOiJhZG1pbiIs", token, 0, "/", "localhost", false, true)
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"Status": true,
