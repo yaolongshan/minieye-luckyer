@@ -13,6 +13,8 @@ func SetupRouter() *gin.Engine {
 	{
 		//登录
 		v1.POST("/login", auth.Login)
+		//判断用户是否登录
+		v1.GET("/islogin", auth.IsLogin)
 		//员工列表
 		v1.GET("/user/list", api.ApiGetAllUser)
 		//添加员工

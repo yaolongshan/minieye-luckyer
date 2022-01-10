@@ -2,7 +2,7 @@
 
 ##### ⛴ 用户登录及校验
 
-登录接口: `/api/login`
+路径: `/api/login`
 
 HTTP: `POST`
 
@@ -15,7 +15,11 @@ HTTP: `POST`
 }
 ```
 
-* 登录成功后，返回token信息，后续请求所有接口都要在请求头里携带token信息，请求头的key为`token`
+##### 🗽 判断用户是否登录
+
+路径: `/api/islogin`
+
+HTTP: `GET`
 
 ##### 🚗 获取所有员工
 
