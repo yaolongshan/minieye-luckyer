@@ -68,8 +68,7 @@ func IsLogin(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"Status": true,
-		"Msg":    "您已登录",
-		"Error":  err.Error()})
+		"Msg":    "您已登录"})
 }
 
 // JWTAuth 用户校验
