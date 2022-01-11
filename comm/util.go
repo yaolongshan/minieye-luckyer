@@ -41,8 +41,6 @@ func CreateLuckyXLSXFile() {
 		cell = row.AddCell()
 		cell.Value = "手机号"
 		cell = row.AddCell()
-		cell.Value = "邮箱"
-		cell = row.AddCell()
 		cell.Value = "奖项等级"
 		cell = row.AddCell()
 		cell.Value = "奖品内容"
@@ -57,8 +55,6 @@ func CreateLuckyXLSXFile() {
 		cell.Value = l.Number
 		cell = row.AddCell()
 		cell.Value = l.Phone
-		cell = row.AddCell()
-		cell.Value = l.Mail
 		cell = row.AddCell()
 		cell.Value = l.PrizeLevel
 		cell = row.AddCell()
@@ -85,7 +81,6 @@ func CreateNotLuckyXLSXFile() {
 		luckyList[i].Name = users[i].Name
 		luckyList[i].Number = users[i].Number
 		luckyList[i].Phone = users[i].Phone
-		luckyList[i].Mail = users[i].Mail
 		luckyList[i].PrizeLevel = "阳光普照奖"
 		luckyList[i].Content = "京东卡/沃尔玛购物卡"
 	}
@@ -102,8 +97,6 @@ func CreateNotLuckyXLSXFile() {
 		cell = row.AddCell()
 		cell.Value = "手机号"
 		cell = row.AddCell()
-		cell.Value = "邮箱"
-		cell = row.AddCell()
 		cell.Value = "奖项等级"
 		cell = row.AddCell()
 		cell.Value = "奖品内容"
@@ -118,8 +111,6 @@ func CreateNotLuckyXLSXFile() {
 		cell.Value = l.Number
 		cell = row.AddCell()
 		cell.Value = l.Phone
-		cell = row.AddCell()
-		cell.Value = l.Mail
 		cell = row.AddCell()
 		cell.Value = l.PrizeLevel
 		cell = row.AddCell()

@@ -65,23 +65,17 @@ func ReadUserFile(path string) error {
 			text := cell.Value
 			switch i {
 			case 0:
-				//fmt.Print("姓名：", text," ")
+				//fmt.Print("姓名：", text, " ")
 				user.Name = text
 			case 1:
-				//fmt.Print("手机：", text," ")
+				//fmt.Print("手机号：", text, " ")
 				user.Phone = text
 			case 2:
-				//fmt.Print("类型：", text," ")
-				user.Type = text
-			case 3:
-				//fmt.Print("工号：", text," ")
+				//fmt.Print("工号：", text, " ")
 				user.Number = text
-			case 4:
-				//fmt.Print("公司：", text," ")
-				user.Contract = text
-			case 5:
-				//fmt.Print("邮箱：", text," ")
-				user.Mail = text
+			case 3:
+				//fmt.Print("类型：", text, " ")
+				user.Type = text
 			}
 		}
 		user.IsLucky = false

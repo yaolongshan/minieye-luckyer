@@ -6,13 +6,11 @@ import (
 
 type TBUser struct {
 	gorm.Model
-	Name     string `gorm:"unique"` // 姓名
-	Phone    string // 手机号
-	Type     string // 员工类型，实习、全职
-	Number   string // 工号
-	Contract string // 合同公司
-	Mail     string // 邮箱
-	IsLucky  bool   // 是否中过奖
+	Name    string `gorm:"unique"` // 姓名
+	Phone   string // 手机号
+	Number  string // 工号
+	Type    string // 员工类型，实习、全职
+	IsLucky bool   // 是否中过奖
 }
 
 // UserCount 员工数量
@@ -52,15 +50,13 @@ func GetNotLuckyFullTimeUserCount() (count int64) {
 }
 
 // AddUser 添加员工
-func AddUser(name, phone, type_, number, contract, mail string) {
+func AddUser(name, phone, number, type_ string) {
 	user := &TBUser{
-		Name:     name,
-		Phone:    phone,
-		Type:     type_,
-		Number:   number,
-		Contract: contract,
-		Mail:     mail,
-		IsLucky:  false,
+		Name:    name,
+		Phone:   phone,
+		Number:  number,
+		Type:    type_,
+		IsLucky: false,
 	}
 	db.Create(&user)
 }

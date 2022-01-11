@@ -45,7 +45,6 @@ func ApiGetNotLucky(c *gin.Context) {
 		luckyList[i].Name = users[i].Name
 		luckyList[i].Number = users[i].Number
 		luckyList[i].Phone = users[i].Phone
-		luckyList[i].Mail = users[i].Mail
 		luckyList[i].PrizeLevel = "阳光普照奖"
 		luckyList[i].Content = "京东卡/沃尔玛购物卡"
 	}

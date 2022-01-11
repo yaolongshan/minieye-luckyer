@@ -7,12 +7,10 @@ import (
 )
 
 type User struct {
-	Name     string `json:"name"`
-	Phone    string `json:"phone"`
-	Type     string `json:"type"`
-	Number   string `json:"number"`
-	Contract string `json:"contract"`
-	Mail     string `json:"mail"`
+	Name   string `json:"name"`
+	Phone  string `json:"phone"`
+	Number string `json:"number"`
+	Type   string `json:"type"`
 }
 
 // ApiGetAllUser 获取所有员工
@@ -33,7 +31,7 @@ func ApiAddUser(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	db.AddUser(user.Name, user.Phone, user.Type, user.Number, user.Contract, user.Mail)
+	db.AddUser(user.Name, user.Phone, user.Number, user.Type)
 	c.JSON(http.StatusOK, gin.H{
 		"Status": true,
 		"Msg":    "ok"})

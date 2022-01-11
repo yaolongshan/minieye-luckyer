@@ -17,7 +17,6 @@ type result struct {
 	Name   string
 	Phone  string
 	Number string
-	Mail   string
 }
 
 // ApiGetRandom 随机抽奖，根据每个奖项的可中奖数量，返回中奖人员
@@ -81,11 +80,10 @@ func ApiGetRandom(c *gin.Context) {
 			Name:   user.Name,
 			Phone:  user.Phone,
 			Number: user.Number,
-			Mail:   user.Mail,
 		}
 		results = append(results, r)
 		//保存到中奖信息
-		db.AddLucky(int(user.ID), user.Name, user.Number, user.Phone, user.Mail, prize.Level, prize.Name)
+		db.AddLucky(int(user.ID), user.Name, user.Number, user.Phone, prize.Level, prize.Name)
 		//奖项已抽数量递增
 		db.PrizeIncrease(int(prize.ID))
 		//标记一下用户表中的已中奖字段
@@ -167,7 +165,6 @@ func ApiGetRandomV2(c *gin.Context) {
 			Name:   user.Name,
 			Phone:  user.Phone,
 			Number: user.Number,
-			Mail:   user.Mail,
 		}
 		results = append(results, r)
 		//保存中奖记录
@@ -176,7 +173,6 @@ func ApiGetRandomV2(c *gin.Context) {
 			Name:       user.Name,
 			Number:     user.Number,
 			Phone:      user.Phone,
-			Mail:       user.Mail,
 			PrizeLevel: prize.Level,
 			Content:    prize.Name,
 		}
@@ -259,7 +255,6 @@ func ApiGetRandomV3(c *gin.Context) {
 			Name:   user.Name,
 			Phone:  user.Phone,
 			Number: user.Number,
-			Mail:   user.Mail,
 		}
 		results = append(results, r)
 		//保存中奖记录
@@ -268,7 +263,6 @@ func ApiGetRandomV3(c *gin.Context) {
 			Name:       user.Name,
 			Number:     user.Number,
 			Phone:      user.Phone,
-			Mail:       user.Mail,
 			PrizeLevel: prize.Level,
 			Content:    prize.Name,
 		}
