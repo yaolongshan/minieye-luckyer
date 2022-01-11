@@ -1,7 +1,0 @@
-mode: set
-code/minieye-luckyer/test/base.go:11.12,17.34 5 1
-code/minieye-luckyer/test/base.go:23.2,24.34 2 1
-code/minieye-luckyer/test/base.go:17.34,19.17 2 0
-code/minieye-luckyer/test/base.go:19.17,20.14 1 0
-code/minieye-luckyer/test/base.go:24.34,26.17 2 0
-code/minieye-luckyer/test/base.go:26.17,27.14 1 0

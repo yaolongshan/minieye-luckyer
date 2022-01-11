@@ -9,7 +9,6 @@ import (
 )
 
 func Init() {
-	fmt.Println("init...")
 	conf.LoadLocalConfTest()
 	db.InitDBTest()
 	// dir
