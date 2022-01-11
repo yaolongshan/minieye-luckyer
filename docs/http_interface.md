@@ -43,8 +43,6 @@ HTTP: `GET`
         "Phone": "18811111111",
         "Type": "实习", //工作类型：实习、全职
         "Number": "00888", //工号
-        "Contract": "深圳佑驾创新科技有限公司", //合同公司
-        "Mail": "xxxxxxx@minieye.cc",
         "IsLucky": false //是否中奖过
       },
       {
@@ -56,8 +54,6 @@ HTTP: `GET`
         "Phone": "13611111111",
         "Type": "全职",
         "Number": "00666",
-        "Contract": "深圳佑驾创新科技有限公司",
-        "Mail": "xxxxxxx@minieye.cc",
         "IsLucky": false //是否中奖过
       }
     ]
@@ -79,9 +75,7 @@ HTTP: `GET`
     "name": "张三",
     "phone": "110",
     "type": "实习", //只有 `实习` 和 `全职` 两种类型
-    "number": "111", //工号
-    "contract": "深圳佑驾创新科技有限公司",
-    "mail": "xxx@minieye.cc"
+    "number": "111" //工号
   }
   ```
 
@@ -234,7 +228,6 @@ HTTP: `GET`
       "Name": "张三",
       "Number": "00001",
       "Phone": "18088888888",
-      "Mail": "zhangsan@minieye.cc",
       "PrizeLevel": "特等奖",
       "Content": "美的洗衣机一台"
     }
@@ -270,7 +263,6 @@ HTTP: `GET`
       "Name": "张三",
       "Number": "00001",
       "Phone": "18088888888",
-      "Mail": "zhangsan@minieye.cc",
       "PrizeLevel": "阳光普照奖",
       "Content": "京东卡/沃尔玛购物卡"
     }
@@ -311,7 +303,6 @@ http://localhost:8080/api/lucky/random?id=1
       "Name": "张三",
       "Phone": "18000000000",
       "Number": "00001",
-      "Mail": "zhangsan@minieye.cc"
     }
   ]
 }
