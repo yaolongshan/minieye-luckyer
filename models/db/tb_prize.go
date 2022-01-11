@@ -13,7 +13,6 @@ type TBPrize struct {
 	Sum         int    // 奖项总数量
 	AlreadyUsed int    // 已抽数量
 	DrawNumber  int    // 抽奖数量，每次抽奖根据这个值去抽取多少个中奖
-	ImageUrl    string
 }
 
 // GetPrizeList 奖项列表
@@ -54,14 +53,13 @@ func UpdatePrizeDrawNumber(id, drawNumber int) error {
 }
 
 // AddPrize 添加一个奖项
-func AddPrize(level, name, url string, sum, drawNumber int) error {
+func AddPrize(level, name string, sum int) error {
 	p := &TBPrize{
 		Level:       level,
 		Name:        name,
 		Sum:         sum,
 		AlreadyUsed: 0,
 		DrawNumber:  sum,
-		ImageUrl:    url,
 	}
 	err := db.Create(&p).Error
 	return err

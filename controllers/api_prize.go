@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"code/minieye-luckyer/comm"
 	"code/minieye-luckyer/models/db"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -12,8 +11,6 @@ type prize struct {
 	Level       string `json:"level"`
 	Name        string `json:"name"`
 	Sum         int    `json:"sum"`
-	DrawNumber  int    `json:"draw_number"`
-	ImageBase64 string `json:"image_base64"`
 }
 
 // ApiAddPrize 添加一个奖项
@@ -27,15 +24,15 @@ func ApiAddPrize(c *gin.Context) {
 			"Error":  err.Error()})
 		return
 	}
-	b, urlOrMsg := comm.Base64SaveImage(p.ImageBase64)
-	if !b {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"Status": false,
-			"Msg":    "图片数据错误",
-			"Error":  urlOrMsg})
-		return
-	}
-	err = db.AddPrize(p.Level, p.Name, urlOrMsg, p.Sum, p.DrawNumber)
+	//b, urlOrMsg := comm.Base64SaveImage(p.ImageBase64)
+	//if !b {
+	//	c.JSON(http.StatusBadRequest, gin.H{
+	//		"Status": false,
+	//		"Msg":    "图片数据错误",
+	//		"Error":  urlOrMsg})
+	//	return
+	//}
+	err = db.AddPrize(p.Level, p.Name, p.Sum)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Status": false,
