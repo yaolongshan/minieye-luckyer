@@ -1,7 +1,6 @@
 package test
 
 import (
-	r "code/minieye-luckyer/router"
 	"github.com/go-playground/assert/v2"
 	"net/http"
 	"net/http/httptest"
@@ -9,8 +8,7 @@ import (
 )
 
 func TestApiRandomGreeting(t *testing.T) {
-	Init()
-	router := r.SetupRouter()
+	//Init()
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/greetings/random?count=1", nil)
 	router.ServeHTTP(w, req)

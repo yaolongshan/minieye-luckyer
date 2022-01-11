@@ -1,7 +1,6 @@
 package test
 
 import (
-	r "code/minieye-luckyer/router"
 	"github.com/go-playground/assert/v2"
 	"net/http"
 	"net/http/httptest"
@@ -15,8 +14,8 @@ func TestApiGetAllLucky(t *testing.T) {
 	//	t.Fail()
 	//}
 	//fmt.Println("api: /api/lucky/list",response.StatusCode)
-	Init()
-	router := r.SetupRouter()
+	//Init()
+	//router := r.SetupRouter()
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/lucky/list", nil)
 	router.ServeHTTP(w, req)
@@ -30,8 +29,8 @@ func TestApiGetLuckyFile(t *testing.T) {
 	//	t.Fail()
 	//}
 	//fmt.Println("api: /api/lucky/file",response.StatusCode)
-	Init()
-	router := r.SetupRouter()
+	//Init()
+	//router := r.SetupRouter()
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/lucky/file", nil)
 	router.ServeHTTP(w, req)

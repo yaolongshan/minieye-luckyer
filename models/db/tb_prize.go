@@ -60,7 +60,7 @@ func AddPrize(level, name, url string, sum, drawNumber int) error {
 		Name:        name,
 		Sum:         sum,
 		AlreadyUsed: 0,
-		DrawNumber:  drawNumber,
+		DrawNumber:  sum,
 		ImageUrl:    url,
 	}
 	err := db.Create(&p).Error
