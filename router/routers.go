@@ -45,6 +45,10 @@ func SetupRouter() *gin.Engine {
 		v1.POST("/sms/send", api.ApiSendSMS)
 		//钉钉消息通知接口
 		v1.POST("/ding/send", api.ApiSendDingDing)
+		//设置通知功能开关状态
+		v1.GET("/notify/set", api.ApiNotifySet)
+		//获取通知功能开关状态
+		v1.GET("/notify/get", api.ApiNotifyGet)
 		//祝福语列表
 		v1.GET("/greeting/list", api.ApiGreetingList)
 		//添加一条祝福语

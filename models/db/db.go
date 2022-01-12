@@ -19,6 +19,14 @@ func InitDB() {
 	_ = db.AutoMigrate(&TBPrize{})
 	_ = db.AutoMigrate(&TBLucky{})
 	_ = db.AutoMigrate(&TBGreeting{})
+	_ = db.AutoMigrate(&TBSystem{})
+
+	// 默认生成通知功能的开关为false
+	sys := TBSystem{
+		Key: "notify",
+		Value: "false",
+	}
+	db.Create(&sys)
 }
 
 // InitDBTest 单元测试用例

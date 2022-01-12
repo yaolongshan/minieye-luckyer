@@ -310,6 +310,8 @@ http://localhost:8080/api/lucky/random?id=1
 
 ##### 🛴 发送一条中奖通知  短信&钉钉消息
 
+先调用[获取通知功能的开关状态](#🔑 获取通知功能的开关状态)接口，当返回的`NotifyStatus`内容为`false`时，就不要调用发短信、钉钉的接口
+
 短信: `/api/sms/send`
 
 钉钉消息: `/api/ding/send`
@@ -336,6 +338,24 @@ HTTP: `POST`
   "Msg": "发送成功"
 }
 ```
+
+##### ⚙️ 设置通知功能的开关状态
+
+路径：`/api/notify/set`
+
+HTTP：`GET`
+
+参数：`status`
+
+参数说明：可接受`"1", "t", "T", "true", "TRUE", "True"` 或者 `"0", "f", "F", "false", "FALSE", "False"`
+
+##### 🔑 获取通知功能的开关状态
+
+仅作为一个前端标识，当状态为false时，就不要调用发送钉钉、短信的接口
+
+路径：`/api/notify/get`
+
+HTTP：`GET`
 
 ##### ✈️ 获取所有祝福语
 
