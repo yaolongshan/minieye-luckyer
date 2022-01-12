@@ -368,8 +368,8 @@ HTTP：`GET`
 ```json
 {
   "Status": true,
-	"Msg": "获取成功",
-	"NotifyStatus": false
+  "Msg": "获取成功",
+  "NotifyStatus": false
 }
 ```
 

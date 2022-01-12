@@ -3,7 +3,6 @@ package controllers
 import (
 	"code/minieye-luckyer/models/db"
 	"code/minieye-luckyer/services"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -60,8 +59,8 @@ func ApiNotifyGet(c *gin.Context) {
 	value := db.GetValue("notify").Value
 	status, _ := strconv.ParseBool(value)
 	c.JSON(http.StatusOK, gin.H{
-		"Status": true,
-		"Msg": "获取成功",
+		"Status":       true,
+		"Msg":          "获取成功",
 		"NotifyStatus": status,
 	})
 }
@@ -80,7 +79,8 @@ func ApiNotifySet(c *gin.Context) {
 	db.SetValue("notify", strconv.FormatBool(status))
 	curr := db.GetValue("notify").Value
 	c.JSON(http.StatusOK, gin.H{
-		"Status": true,
-		"Msg":    fmt.Sprintf("设置成功，当前状态为%v", curr),
+		"Status":       true,
+		"Msg":          "设置通知功能状态成功",
+		"NotifyStatus": curr,
 	})
 }
