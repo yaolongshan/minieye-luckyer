@@ -349,6 +349,12 @@ HTTP：`GET`
 
 参数说明：可接受`"1", "t", "T", "true", "TRUE", "True"` 或者 `"0", "f", "F", "false", "FALSE", "False"`
 
+请求示例:
+
+```http
+http://localhost:8080/api/notify/set?status=true
+```
+
 ##### 🔑 获取通知功能的开关状态
 
 仅作为一个前端标识，当状态为false时，就不要调用发送钉钉、短信的接口
@@ -356,6 +362,16 @@ HTTP：`GET`
 路径：`/api/notify/get`
 
 HTTP：`GET`
+
+返回示例:
+
+```json
+{
+  "Status": true,
+	"Msg": "获取成功",
+	"NotifyStatus": false
+}
+```
 
 ##### ✈️ 获取所有祝福语
 

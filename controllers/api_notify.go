@@ -60,6 +60,8 @@ func ApiNotifyGet(c *gin.Context) {
 	value := db.GetValue("notify").Value
 	status, _ := strconv.ParseBool(value)
 	c.JSON(http.StatusOK, gin.H{
+		"Status": true,
+		"Msg": "获取成功",
 		"NotifyStatus": status,
 	})
 }
