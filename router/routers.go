@@ -55,6 +55,8 @@ func SetupRouter() *gin.Engine {
 		v1.GET("/greeting/luckylist", api.ApiGreetingLuckyList)
 		//下载中奖的祝福语表格文件
 		v1.GET("/greeting/file", api.ApiLuckyGreetingFile)
+		//测试用，初始化数据库数据
+		v1.GET("/db/init", api.ApiDBInit)
 	}
 	return app
 }
