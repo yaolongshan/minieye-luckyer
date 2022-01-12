@@ -83,6 +83,7 @@ func ApiRandomGreeting(c *gin.Context) {
 	type result struct {
 		Name     string
 		Number   string
+		Phone    string
 		Greeting string
 	}
 	var results []result
@@ -107,6 +108,7 @@ func ApiRandomGreeting(c *gin.Context) {
 		r := result{
 			Name:     greeting.Name,
 			Number:   greeting.Number,
+			Phone:    greeting.Phone,
 			Greeting: greeting.Greeting,
 		}
 		results = append(results, r)
