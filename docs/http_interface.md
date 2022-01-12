@@ -447,3 +447,9 @@ HTTP:  `GET`
 路径:  `/api/greeting/file`
 
 HTTP:  `GET`
+
+##### 📞 初始化数据库，用于重置表中数据
+
+路径:  `/api/db/init`
+
+HTTP:  `GET`
