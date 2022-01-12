@@ -66,7 +66,7 @@ func genAccessToken(
 	appKey string,
 	appSecret string,
 ) (string, error) {
-	accessTokenFileName := "/tmp/minieye_robot_access_token"
+	accessTokenFileName := "/tmp/minieye_robot_access_token_test"
 	data1, err1 := ioutil.ReadFile(accessTokenFileName)
 	if err1 != nil {
 		data2, err2 := genAccessTokenByHTTP(appKey, appSecret)

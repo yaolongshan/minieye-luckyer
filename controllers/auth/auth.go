@@ -48,24 +48,24 @@ func Login(c *gin.Context) {
 
 // IsLogin 判断用户是否登录
 func IsLogin(c *gin.Context) {
-	token, err := c.Cookie("m5hbWUiOiJhZG1pbiIs")
-	// cookie中是否携带token
-	if err != nil || token == "" {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"Status": false,
-			"Msg":    "请登录后重试",
-			"Error":  err.Error()})
-		return
-	}
-	// 携带的token进行校验
-	_, err = parseToken(token)
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"Status": false,
-			"Msg":    "请登录后重试",
-			"Error":  err.Error()})
-		return
-	}
+	//token, err := c.Cookie("m5hbWUiOiJhZG1pbiIs")
+	//// cookie中是否携带token
+	//if err != nil || token == "" {
+	//	c.JSON(http.StatusUnauthorized, gin.H{
+	//		"Status": false,
+	//		"Msg":    "请登录后重试",
+	//		"Error":  err.Error()})
+	//	return
+	//}
+	//// 携带的token进行校验
+	//_, err = parseToken(token)
+	//if err != nil {
+	//	c.JSON(http.StatusUnauthorized, gin.H{
+	//		"Status": false,
+	//		"Msg":    "请登录后重试",
+	//		"Error":  err.Error()})
+	//	return
+	//}
 	c.JSON(http.StatusOK, gin.H{
 		"Status": true,
 		"Msg":    "您已登录"})

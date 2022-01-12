@@ -9,7 +9,7 @@ import (
 func SetupRouter() *gin.Engine {
 	app := gin.Default()
 	v1 := app.Group("/api")
-	v1.Use(auth.JWTAuth)
+	//v1.Use(auth.JWTAuth)
 	{
 		//登录
 		v1.POST("/login", auth.Login)
