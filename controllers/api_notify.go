@@ -77,10 +77,9 @@ func ApiNotifySet(c *gin.Context) {
 		return
 	}
 	db.SetValue("notify", strconv.FormatBool(status))
-	curr := db.GetValue("notify").Value
 	c.JSON(http.StatusOK, gin.H{
 		"Status":       true,
 		"Msg":          "设置通知功能状态成功",
-		"NotifyStatus": curr,
+		"NotifyStatus": status,
 	})
 }
