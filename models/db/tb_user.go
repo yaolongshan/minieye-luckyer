@@ -6,8 +6,8 @@ import (
 
 type TBUser struct {
 	gorm.Model
-	Name    string `gorm:"unique"` // 姓名
-	Phone   string // 手机号
+	Name    string // 姓名
+	Phone   string `gorm:"unique"` // 手机号
 	Number  string // 工号
 	Type    string // 员工类型，实习、全职
 	IsLucky bool   // 是否中过奖
