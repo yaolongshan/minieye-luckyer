@@ -18,7 +18,7 @@ var (
 	//自定义的token秘钥
 	secret = []byte("eyJpZCI6IjAwMSIsIm5hbWUiOiJhZG1pbiIsImV4cCI6MTY0MTU0MzCwN30")
 	//token有效时间
-	effectTime = 24 * time.Hour
+	//effectTime = 24 * time.Hour
 )
 
 var (
@@ -27,7 +27,7 @@ var (
 
 // GenerateToken 生成token
 func GenerateToken(claims *UserClaims) (string, error) {
-	claims.ExpiresAt = time.Now().Add(effectTime).Unix()
+	//claims.ExpiresAt = time.Now().Add(effectTime).Unix()
 	//生成token
 	sign, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
 	if err != nil {
