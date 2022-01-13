@@ -207,9 +207,9 @@ func sendMsg(
 
 	log.Printf("create client success\n")
 
-	msgTitle := "【敢攀登  无止境】"
-	//【敢攀登  无止境】 恭喜林智获得2022MINIEYE新春年会一等奖，XXXXX，快快联系【行政部 - 汤佳燕】领取吧～～
-	msgText := fmt.Sprintf("【敢攀登  无止境】 恭喜%v获得2022MINIEYE新春年会%v，快快联系【行政部 - 汤佳燕】领取吧～～",
+	msgTitle := "【敢攀登 无止境】"
+	//【敢攀登 无止境】 恭喜林智获得MINIEYE 2022新春年会二等奖，华为手机一部，快快联系【行政部 - 汤佳燕】领取吧～～
+	msgText := fmt.Sprintf("【敢攀登 无止境】 恭喜%v获得MINIEYE 2022新春年会%v，快快联系【行政部 - 汤佳燕】领取吧～～",
 		userName, awardLevel)
 	msgMap := make(map[string]string)
 	msgMap["title"] = msgTitle

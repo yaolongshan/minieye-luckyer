@@ -2,13 +2,13 @@ package controllers
 
 import (
 	"code/minieye-luckyer/models/db"
-	"crypto/rand"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"math/big"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"sync"
+	"time"
 )
 
 var lMu sync.Mutex
@@ -74,8 +74,9 @@ func ApiGetRandom(c *gin.Context) {
 			break
 		}
 		fmt.Println(fmt.Sprintf("第%v轮共有%v人参与抽奖", i+1, lenUser))
-		index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
-		user := users[index.Int64()]
+		//index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
+		index := rand.Intn(lenUser)
+		user := users[index]
 		r := result{
 			Name:   user.Name,
 			Phone:  user.Phone,
@@ -157,10 +158,11 @@ func ApiGetRandomV2(c *gin.Context) {
 			break
 		}
 		fmt.Println(fmt.Sprintf("第%v轮共有%v人参与抽奖", i+1, lenUser))
-		index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
-		user := users[index.Int64()]
+		//index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
+		index := rand.Intn(lenUser)
+		user := users[index]
 		//从数组中移除这位用户
-		users = append(users[:index.Int64()], users[index.Int64()+1:]...)
+		users = append(users[:index], users[index+1:]...)
 		r := result{
 			Name:   user.Name,
 			Phone:  user.Phone,
@@ -235,6 +237,8 @@ func ApiGetRandomV3(c *gin.Context) {
 	var ids []int
 	//拿到没中奖的非实习生小伙伴
 	users := db.GetNotLuckyFullTimeUserList()
+	//随机种子
+	rand.Seed(time.Now().UnixNano())
 	// 抽奖过程
 	for i := 0; i < prize.DrawNumber; i++ {
 		// 剩余奖项数量
@@ -246,11 +250,13 @@ func ApiGetRandomV3(c *gin.Context) {
 		if lenUser == 0 {
 			break
 		}
+		//打乱一波
+		users = upsetUsers(users, lenUser)
 		fmt.Println(fmt.Sprintf("第%v轮共有%v人参与抽奖", i+1, lenUser))
-		index, _ := rand.Int(rand.Reader, big.NewInt(int64(lenUser)))
-		user := users[index.Int64()]
+		index := rand.Intn(lenUser)
+		user := users[index]
 		//从数组中移除这位用户
-		users = append(users[:index.Int64()], users[index.Int64()+1:]...)
+		users = append(users[:index], users[index+1:]...)
 		r := result{
 			Name:   user.Name,
 			Phone:  user.Phone,
@@ -287,4 +293,15 @@ func ApiGetRandomV3(c *gin.Context) {
 		"PrizeRemaining": prize.Sum - prize.AlreadyUsed,
 	})
 	lMu.Unlock()
+}
+
+// 打乱用户数组
+func upsetUsers(users []db.TBUser, len int) []db.TBUser {
+	rand.Shuffle(len, func(i, j int) {
+		users[i], users[j] = users[j], users[i]
+	})
+	rand.Shuffle(len, func(i, j int) {
+		users[i], users[j] = users[j], users[i]
+	})
+	return users
 }
